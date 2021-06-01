@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">AmbulanceAdmin</string>
+
+    <string name="place_holder_email">Type your email address</string>
+    <string name="placeholder_password">Type your password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="password">Password</string>
+    <string name="email">Email Address</string>
+    <string name="continue_">Continue</string>
+    <string name="full_name">Full Name</string>
+    <string name="placeholder_full_name">Type your full name</string>
+    <string name="placeholder_phone_number">Type your phone number</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="address">Address</string>
+    <string name="placeholder_address">Type your address</string>
+    <string name="logout">Logout</string>
+
+</resources>
