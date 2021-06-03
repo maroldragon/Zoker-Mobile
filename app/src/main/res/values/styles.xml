@@ -28,7 +28,7 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="Button.Primary" parent="@style/Widget.AppCompat.Button.Colored">
-        <item name="colorButtonNormal">@color/colorPrimary</item>
+        <item name="colorButtonNormal">@color/blue_500</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
 
@@ -79,21 +79,21 @@
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 
-    <!--style for ripple library-->
-    <style name="RippleStyleWhite">
-        <item name="mrl_rippleOverlay">true</item>
-        <item name="mrl_rippleColor">#80FFFFFF</item>
-        <item name="mrl_rippleHover">true</item>
-        <item name="mrl_rippleAlpha">0.2</item>
-    </style>
+<!--    &lt;!&ndash;style for ripple library&ndash;&gt;-->
+<!--    <style name="RippleStyleWhite">-->
+<!--        <item name="mrl_rippleOverlay">true</item>-->
+<!--        <item name="mrl_rippleColor">#80FFFFFF</item>-->
+<!--        <item name="mrl_rippleHover">true</item>-->
+<!--        <item name="mrl_rippleAlpha">0.2</item>-->
+<!--    </style>-->
 
-    <style name="RippleStyleBlack" parent="RippleStyleWhite">
-        <item name="mrl_rippleColor">#8096989A</item>
-    </style>
+<!--    <style name="RippleStyleBlack" parent="RippleStyleWhite">-->
+<!--        <item name="mrl_rippleColor">#8096989A</item>-->
+<!--    </style>-->
 
-    <style name="RippleStyleDark" parent="RippleStyleWhite">
-        <item name="mrl_rippleColor">#80000000</item>
-    </style>
+<!--    <style name="RippleStyleDark" parent="RippleStyleWhite">-->
+<!--        <item name="mrl_rippleColor">#80000000</item>-->
+<!--    </style>-->
 
     <style name="Dialog.Theme" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorPrimary">@color/colorPrimary</item>
