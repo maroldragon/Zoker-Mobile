@@ -1,4 +1,4 @@
-package com.example.perpustakaandigital.pragment
+package com.example.perpustakaandigital.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,13 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
-import android.widget.Spinner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.perpustakaandigital.R
-import com.example.perpustakaandigital.adapter.KategoriAdapter
 import com.example.perpustakaandigital.adapter.NotifikasiAdapter
-import com.example.perpustakaandigital.model.Book
 import com.example.perpustakaandigital.model.Notif
 import com.example.perpustakaandigital.screen.DetailActivity
 

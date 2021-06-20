@@ -1,4 +1,4 @@
-package com.example.perpustakaandigital.pragment
+package com.example.perpustakaandigital.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -60,12 +60,13 @@ class CategoryFragment : Fragment() {
         val book = Book("123", "Milk And Honey",
             "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1534&q=80", "Love", "Evan Owen", "This talk about love and live")
         bookList.add(book)
+        bookList.add(book)
         showRecyclerKategori()
     }
 
 
     private fun showRecyclerKategori() {
-        rvKategori.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        rvKategori.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         val kategoriAdapter = KategoriAdapter(bookList)
         rvKategori.adapter = kategoriAdapter
 

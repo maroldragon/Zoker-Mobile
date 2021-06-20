@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="180dp"
     android:padding="@dimen/spacing_large"
-    android:layout_marginVertical="@dimen/spacing_large"
+    android:layout_marginVertical="@dimen/spacing_small"
     android:background="@drawable/bg_fill_category_big">
 
     <LinearLayout
@@ -65,9 +65,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="10dp"/>
 
 </LinearLayout>

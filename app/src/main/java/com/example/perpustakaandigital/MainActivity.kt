@@ -3,7 +3,7 @@ package com.example.perpustakaandigital
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import com.example.perpustakaandigital.pragment.*
+import com.example.perpustakaandigital.fragment.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
             false
         }
         if (savedInstanceState == null){
-            bottomNavigation.selectedItemId = R.id.menu_home
+            bottomNavigation.selectedItemId = R.id.menu_profil
         }
     }
 

@@ -4,8 +4,8 @@
     android:padding="10dp">
     <stroke
         android:width="2dp"
-        android:color="@color/grey_300" />
-    <solid android:color="@color/grey_300" />
+        android:color="@color/blue_grey_200" />
+    <solid android:color="@color/blue_grey_200" />
     <corners
         android:radius="8dp" />
 </shape>
