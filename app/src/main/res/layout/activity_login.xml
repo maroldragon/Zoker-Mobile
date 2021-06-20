@@ -105,7 +105,7 @@
                 android:textSize="20sp"
                 android:textAllCaps="false"
                 android:text="Daftar"
-                android:background="@drawable/bg_fill_empty"
+                android:background="@drawable/bg_fill_empty_min_corner"
                 android:textColor="@color/colorPrimary"
                 android:padding="25dp" />
 
