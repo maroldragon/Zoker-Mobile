@@ -42,7 +42,7 @@
     </string-array>
 
     <string-array name="kategori_array">
-        <item>Semua Kateogori</item>
+        <item>Semua Kategori</item>
         <item>History</item>
         <item>Aksi</item>
     </string-array>

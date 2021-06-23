@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
             false
         }
         if (savedInstanceState == null){
-            bottomNavigation.selectedItemId = R.id.menu_profil
+            bottomNavigation.selectedItemId = R.id.menu_home
         }
     }
 

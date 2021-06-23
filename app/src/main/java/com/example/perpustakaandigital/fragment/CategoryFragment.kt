@@ -6,10 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.Spinner
+import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.perpustakaandigital.R
@@ -20,6 +17,13 @@ import com.example.perpustakaandigital.screen.DetailActivity
 class CategoryFragment : Fragment() {
 
     private var bookList: ArrayList<Book> = arrayListOf()
+    lateinit var etSearch : EditText
+    lateinit var imgv_filter : ImageView
+    lateinit var llFilter : LinearLayout
+    lateinit var etAuthorSearch : EditText
+    lateinit var etIsbnSearch : EditText
+    lateinit var etPenerbitSearch : EditText
+    lateinit var btnSearch : Button
     lateinit var spinKateogri : Spinner
     lateinit var rvKategori : RecyclerView
     lateinit var progressKategori: ProgressBar
@@ -32,10 +36,26 @@ class CategoryFragment : Fragment() {
         // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_category, container, false)
 
+        llFilter = view.findViewById(R.id.ll_kategori_filter)
+        etSearch = view.findViewById(R.id.et_kategori_search_item)
+        imgv_filter = view.findViewById(R.id.imgv_kategori_search_filter)
+        etAuthorSearch = view.findViewById(R.id.et_kategori_search_author)
+        etIsbnSearch = view.findViewById(R.id.et_kategori_search_isbn)
+        etPenerbitSearch = view.findViewById(R.id.et_kategori_search_penerbit)
+        btnSearch = view.findViewById(R.id.btn_kategori_search)
         spinKateogri = view.findViewById(R.id.spin_kategori)
         rvKategori = view.findViewById(R.id.rv_kategori)
         progressKategori = view.findViewById(R.id.progress_kategori)
         imvEmpty = view.findViewById(R.id.imgv_empty_kategori)
+
+        imgv_filter.setOnClickListener {
+            if(llFilter.visibility == View.VISIBLE){
+                llFilter.visibility = View.GONE
+            }else {
+                llFilter.visibility = View.VISIBLE
+            }
+
+        }
 
         ArrayAdapter.createFromResource(
                 context!!,

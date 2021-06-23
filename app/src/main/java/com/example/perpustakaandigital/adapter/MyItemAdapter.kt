@@ -21,7 +21,7 @@ class MyItemAdapter(val bookList: ArrayList<Book>) : RecyclerView.Adapter<MyItem
         val book = bookList[position]
 
         Glide.with(holder.itemView.context)
-                .load("https://koenig-media.raywenderlich.com/uploads/2019/05/Screenshot_1557010833-281x500.png")
+                .load("https://m.media-amazon.com/images/I/51AUQJVbXJL.jpg")
                 .centerCrop()
                 .into(holder.imgPhoto)
 

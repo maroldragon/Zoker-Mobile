@@ -1,6 +1,5 @@
 package com.example.perpustakaandigital.adapter
 
-import android.graphics.Color
 import android.widget.TextView
 import com.smarteist.autoimageslider.SliderViewAdapter
 import com.bumptech.glide.Glide

@@ -28,6 +28,10 @@ class HomeFragment : Fragment() {
     lateinit var etSearch : EditText
     lateinit var imgv_filter : ImageView
     lateinit var llFilter : LinearLayout
+    lateinit var etAuthorSearch : EditText
+    lateinit var etIsbnSearch : EditText
+    lateinit var etPenerbitSearch : EditText
+    lateinit var btnSearch : Button
     lateinit var rvHomeNew : RecyclerView
     lateinit var progressHomeNew: ProgressBar
     lateinit var imvEmptyHomeNew : ImageView
@@ -45,6 +49,10 @@ class HomeFragment : Fragment() {
         llFilter = view.findViewById(R.id.ll_home_filter)
         etSearch = view.findViewById(R.id.et_home_search_item)
         imgv_filter = view.findViewById(R.id.imgv_home_search_filter)
+        etAuthorSearch = view.findViewById(R.id.et_home_search_author)
+        etIsbnSearch = view.findViewById(R.id.et_home_search_isbn)
+        etPenerbitSearch = view.findViewById(R.id.et_home_search_penerbit)
+        btnSearch = view.findViewById(R.id.btn_home_search)
         sliderView = view.findViewById(R.id.imageSlider)
         rvHomeNew = view.findViewById(R.id.rv_home_new)
         progressHomeNew= view.findViewById(R.id.progress_home_new)
