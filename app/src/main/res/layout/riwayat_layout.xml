@@ -14,7 +14,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/imgv_category"
+            android:id="@+id/imgv_riwayat"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
@@ -27,7 +27,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_category_name"
+                android:id="@+id/tv_riwayat_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
@@ -38,7 +38,7 @@
                 android:layout_height="15dp"/>
 
             <TextView
-                android:id="@+id/tv_category_author"
+                android:id="@+id/tv_riwayat_author"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
@@ -49,19 +49,39 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
 
-            <Button
-                android:id="@+id/btn_kategori_pratinjau"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:layout_gravity="right"
-                android:layout_margin="5dp"
-                android:text="Pratinjau"
-                android:textAllCaps="false"
-                android:padding="2dp"
-                android:background="@drawable/bg_fill_category"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
+                <Button
+                    android:id="@+id/btn_riwayat_pinjamLagi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_gravity="right"
+                    android:layout_margin="5dp"
+                    android:text="Pinjam Lagi"
+                    android:textAllCaps="false"
+                    android:padding="2dp"
+                    android:background="@drawable/bg_fill_category"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/tv_riwayat_tanggal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="10/10/21"/>
+
+
+
+            </LinearLayout>
 
         </LinearLayout>
 

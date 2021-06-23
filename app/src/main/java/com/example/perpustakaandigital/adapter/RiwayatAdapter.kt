@@ -12,8 +12,8 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.perpustakaandigital.model.Book
 import com.example.perpustakaandigital.R
 
-class KategoriAdapter(val bookList: ArrayList<Book>) : RecyclerView.Adapter<KategoriAdapter.Holder>() {
-    private lateinit var onItemClickCallback: KategoriAdapter.OnItemClickCallback
+class RiwayatAdapter(val bookList: ArrayList<Book>) : RecyclerView.Adapter<RiwayatAdapter.Holder>() {
+    private lateinit var onItemClickCallback: RiwayatAdapter.OnItemClickCallback
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
     }
@@ -33,7 +33,7 @@ class KategoriAdapter(val bookList: ArrayList<Book>) : RecyclerView.Adapter<Kate
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.kategory_layout, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.riwayat_layout, parent, false)
         return Holder(view)
     }
 
@@ -42,10 +42,11 @@ class KategoriAdapter(val bookList: ArrayList<Book>) : RecyclerView.Adapter<Kate
     }
 
     inner class Holder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
-        var imgPhoto: ImageView = itemView!!.findViewById(R.id.imgv_category)
-        var bookName: TextView = itemView!!.findViewById(R.id.tv_category_name)
-        var bookAuthor : TextView = itemView!!.findViewById(R.id.tv_category_author)
-        var button_pratinjau : Button = itemView!!.findViewById(R.id.btn_kategori_pratinjau)
+        var imgPhoto: ImageView = itemView!!.findViewById(R.id.imgv_riwayat)
+        var bookName: TextView = itemView!!.findViewById(R.id.tv_riwayat_name)
+        var bookAuthor : TextView = itemView!!.findViewById(R.id.tv_riwayat_author)
+        var pinjam_lagi : Button = itemView!!.findViewById(R.id.btn_riwayat_pinjamLagi)
+        var tanggal : TextView = itemView!!.findViewById(R.id.tv_riwayat_tanggal)
     }
 
     interface OnItemClickCallback {

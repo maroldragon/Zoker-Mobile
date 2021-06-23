@@ -9,137 +9,230 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/blue_grey_200"
-                android:orientation="vertical">
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:textSize="18sp"
-                    android:drawableLeft="@drawable/ic_search"
-                    android:padding="10dp"
-                    android:hint="Cari Item"
-                    android:layout_marginHorizontal="@dimen/spacing_xxlarge"
-                    android:layout_marginVertical="@dimen/spacing_large"
-                    android:background="@drawable/bg_fill_white"
-                    android:drawablePadding="10dp"
-                    android:imeOptions="actionSearch" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp">
-
-                    <com.smarteist.autoimageslider.SliderView
-                        android:id="@+id/imageSlider"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:sliderAnimationDuration="600"
-                        app:sliderAutoCycleDirection="back_and_forth"
-                        app:sliderAutoCycleEnabled="true"
-                        app:sliderCircularHandlerEnabled="true"
-                        app:sliderScrollTimeInSec="5"
-                        app:sliderStartAutoCycle="true" />
-
-                </LinearLayout>
-
-            </LinearLayout>
+            <!--Testing -->
             <View
                 android:layout_width="match_parent"
-                android:layout_height="5dp"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/spacing_large">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:text="Baru Ditambahkan"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_home_new"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
-                        <ImageView
-                            android:id="@+id/imgv_empty_home_new"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:src="@drawable/ic_empty"
-                            android:layout_centerInParent="true"/>
-                        <ProgressBar
-                            android:id="@+id/progress_home_new"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:layout_centerInParent="true"
-                            android:visibility="gone"
-                            tools:visibility="visible"/>
-
-                    </RelativeLayout>
-                </LinearLayout>
-            </LinearLayout>
+                android:layout_height="match_parent"
+                android:background="@color/black"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/spacing_large">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <TextView
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:text="Recommendation"/>
+                    android:background="@color/blue_grey_200"
+                    android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="200dp"
+                        android:layout_marginTop="70dp">
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_home_recommend"
+                        <com.smarteist.autoimageslider.SliderView
+                            android:id="@+id/imageSlider"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            tools:listitem="@layout/kategory_layout"/>
-                        <ImageView
-                            android:id="@+id/imgv_empty_home_recommend"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:src="@drawable/ic_empty"
-                            android:layout_centerInParent="true"/>
-                        <ProgressBar
-                            android:id="@+id/progress_home_recommend"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:layout_centerInParent="true"
+                            app:sliderAnimationDuration="600"
+                            app:sliderAutoCycleDirection="back_and_forth"
+                            app:sliderAutoCycleEnabled="true"
+                            app:sliderCircularHandlerEnabled="true"
+                            app:sliderScrollTimeInSec="5"
+                            app:sliderStartAutoCycle="true" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <EditText
+                                android:id="@+id/et_home_search_item"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="text"
+                                android:textSize="18sp"
+                                android:drawableLeft="@drawable/ic_search"
+                                android:padding="10dp"
+                                android:hint="Cari Item"
+                                android:layout_marginHorizontal="@dimen/spacing_xxlarge"
+                                android:layout_marginVertical="@dimen/spacing_large"
+                                android:background="@drawable/bg_fill_white"
+                                android:drawablePadding="10dp"
+                                android:imeOptions="actionSearch" />
+
+                            <ImageView
+                                android:id="@+id/imgv_home_search_filter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_filter"
+                                android:layout_centerInParent="true"
+                                android:padding="10dp"
+                                android:layout_marginHorizontal="@dimen/spacing_xxlarge"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="20dp" />
+
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_home_filter"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:visibility="gone"
-                            tools:visibility="visible"/>
-                    </RelativeLayout>
+                            android:orientation="vertical">
+
+                            <EditText
+                                android:id="@+id/et_home_search_author"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Nama Penulis"
+                                android:paddingHorizontal="25dp"
+                                android:paddingVertical="3dp"
+                                android:layout_marginVertical="@dimen/spacing_small"
+                                android:layout_marginHorizontal="@dimen/spacing_xlarge"
+                                android:background="@drawable/bg_fill_white" />
+                            <EditText
+                                android:id="@+id/et_home_search_isbn"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="ISBN"
+                                android:paddingHorizontal="25dp"
+                                android:paddingVertical="3dp"
+                                android:layout_marginVertical="@dimen/spacing_small"
+                                android:layout_marginHorizontal="@dimen/spacing_xlarge"
+                                android:background="@drawable/bg_fill_white" />
+                            <EditText
+                                android:id="@+id/et_home_search_penerbit"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Penerbit"
+                                android:paddingHorizontal="25dp"
+                                android:paddingVertical="3dp"
+                                android:layout_marginVertical="@dimen/spacing_small"
+                                android:layout_marginHorizontal="@dimen/spacing_xlarge"
+                                android:background="@drawable/bg_fill_white" />
+
+                            <Button
+                                android:id="@+id/btn_home_search"
+                                android:layout_width="wrap_content"
+                                android:layout_height="27dp"
+                                android:layout_gravity="left"
+                                android:text="Cari"
+                                android:textAllCaps="false"
+                                android:padding="2dp"
+                                android:background="@drawable/bg_fill_category"
+                                android:layout_marginLeft="@dimen/spacing_xlarge"
+                                android:layout_marginVertical="@dimen/spacing_small"
+                                android:textColor="@color/white"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_large">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:text="Baru Ditambahkan"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rv_home_new"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+                            <ImageView
+                                android:id="@+id/imgv_empty_home_new"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:src="@drawable/ic_empty"
+                                android:layout_centerInParent="true"/>
+                            <ProgressBar
+                                android:id="@+id/progress_home_new"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:layout_centerInParent="true"
+                                android:visibility="gone"
+                                tools:visibility="visible"/>
+
+                        </RelativeLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_large">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:text="Recommendation"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rv_home_recommend"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                tools:listitem="@layout/kategory_layout"/>
+                            <ImageView
+                                android:id="@+id/imgv_empty_home_recommend"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:src="@drawable/ic_empty"
+                                android:layout_centerInParent="true"/>
+                            <ProgressBar
+                                android:id="@+id/progress_home_recommend"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:layout_centerInParent="true"
+                                android:visibility="gone"
+                                tools:visibility="visible"/>
+                        </RelativeLayout>
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+        </RelativeLayout>
     </ScrollView>
 </FrameLayout>

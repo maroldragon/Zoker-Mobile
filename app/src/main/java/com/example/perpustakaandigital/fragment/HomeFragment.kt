@@ -7,9 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.Spinner
+import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.perpustakaandigital.R
@@ -27,6 +25,9 @@ class HomeFragment : Fragment() {
     lateinit var sliderView : SliderView
     private var bookList: ArrayList<Book> = arrayListOf()
     private var bookList2: ArrayList<Book> = arrayListOf()
+    lateinit var etSearch : EditText
+    lateinit var imgv_filter : ImageView
+    lateinit var llFilter : LinearLayout
     lateinit var rvHomeNew : RecyclerView
     lateinit var progressHomeNew: ProgressBar
     lateinit var imvEmptyHomeNew : ImageView
@@ -41,6 +42,9 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_home, container, false)
 
+        llFilter = view.findViewById(R.id.ll_home_filter)
+        etSearch = view.findViewById(R.id.et_home_search_item)
+        imgv_filter = view.findViewById(R.id.imgv_home_search_filter)
         sliderView = view.findViewById(R.id.imageSlider)
         rvHomeNew = view.findViewById(R.id.rv_home_new)
         progressHomeNew= view.findViewById(R.id.progress_home_new)
@@ -48,6 +52,15 @@ class HomeFragment : Fragment() {
         rvHomeRecommend = view.findViewById(R.id.rv_home_recommend )
         progressHomeRecommend= view.findViewById(R.id.progress_home_recommend )
         imvEmptyHomeRecommend = view.findViewById(R.id.imgv_empty_home_recommend )
+
+        imgv_filter.setOnClickListener {
+            if(llFilter.visibility == View.VISIBLE){
+                llFilter.visibility = View.GONE
+            }else {
+                llFilter.visibility = View.VISIBLE
+            }
+
+        }
 
         val adapterSlider = SliderAdapter(this)
         adapterSlider.count = 4

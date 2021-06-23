@@ -136,48 +136,48 @@
                     android:textAllCaps="false"
                     android:text="Riwayat Peminjaman"
                     android:background="@color/grey_300"
-                    android:gravity="start"
-                    android:drawableLeft="@drawable/ic_person"
                     android:layout_marginTop="@dimen/spacing_large"
                     android:paddingStart="@dimen/spacing_large"
-                    android:drawableEnd="@drawable/ic_keyboard_arrow_right"
                     android:paddingLeft="@dimen/spacing_large"
+                    android:paddingVertical="10dp"
+                    android:drawableEnd="@drawable/ic_keyboard_arrow_right"
                     android:drawableRight="@drawable/ic_keyboard_arrow_right"
-                    android:drawableStart="@drawable/ic_person" />
+                    android:drawableLeft="@drawable/ic_replay"
+                    android:drawableStart="@drawable/ic_replay" />
 
                 <Button
-                    android:id="@+id/btn_Kontak"
+                    android:id="@+id/btn_kontak"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
                     android:textAllCaps="false"
                     android:text="Kontak"
                     android:background="@color/grey_300"
-                    android:gravity="start"
-                    android:drawableLeft="@drawable/ic_person"
                     android:layout_marginTop="@dimen/spacing_large"
                     android:paddingStart="@dimen/spacing_large"
-                    android:drawableEnd="@drawable/ic_keyboard_arrow_right"
                     android:paddingLeft="@dimen/spacing_large"
+                    android:paddingVertical="10dp"
+                    android:drawableEnd="@drawable/ic_keyboard_arrow_right"
                     android:drawableRight="@drawable/ic_keyboard_arrow_right"
-                    android:drawableStart="@drawable/ic_person" />
+                    android:drawableLeft="@drawable/ic_chat"
+                    android:drawableStart="@drawable/ic_chat" />
 
                 <Button
-                    android:id="@+id/btn_Tentang"
+                    android:id="@+id/btn_tentang"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
                     android:textAllCaps="false"
                     android:text="Tentang Aplikasi"
                     android:background="@color/grey_300"
-                    android:gravity="start"
-                    android:drawableLeft="@drawable/ic_person"
                     android:layout_marginTop="@dimen/spacing_large"
                     android:paddingStart="@dimen/spacing_large"
-                    android:drawableEnd="@drawable/ic_keyboard_arrow_right"
                     android:paddingLeft="@dimen/spacing_large"
+                    android:paddingVertical="10dp"
+                    android:drawableEnd="@drawable/ic_keyboard_arrow_right"
                     android:drawableRight="@drawable/ic_keyboard_arrow_right"
-                    android:drawableStart="@drawable/ic_person" />
+                    android:drawableLeft="@drawable/ic_info"
+                    android:drawableStart="@drawable/ic_info" />
 
                 <Button
                     android:id="@+id/btn_keluar"
@@ -187,17 +187,16 @@
                     android:textAllCaps="false"
                     android:text="Keluar"
                     android:background="@color/grey_300"
-                    android:gravity="start"
-                    android:drawableLeft="@drawable/ic_person"
                     android:layout_marginTop="@dimen/spacing_large"
                     android:paddingStart="@dimen/spacing_large"
-                    android:drawableEnd="@drawable/ic_keyboard_arrow_right"
                     android:paddingLeft="@dimen/spacing_large"
+                    android:paddingVertical="10dp"
+                    android:drawableEnd="@drawable/ic_keyboard_arrow_right"
                     android:drawableRight="@drawable/ic_keyboard_arrow_right"
-                    android:drawableStart="@drawable/ic_person" />
+                    android:drawableLeft="@drawable/ic_login"
+                    android:drawableStart="@drawable/ic_login" />
 
             </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

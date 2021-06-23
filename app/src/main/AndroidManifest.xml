@@ -4,7 +4,7 @@
     package="com.example.perpustakaandigital">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PerpustakaanDigital"
         tools:targetApi="m">
-        <activity android:name=".screen.DetailActivity"/>
+        <activity android:name=".screen.RiwayatActivity"></activity>
+        <activity android:name=".screen.DetailActivity" />
         <activity android:name=".screen.RegisterActivity" />
         <activity
             android:name=".screen.LoginActivity"
