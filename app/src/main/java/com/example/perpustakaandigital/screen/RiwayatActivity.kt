@@ -9,6 +9,7 @@ import android.widget.ProgressBar
 import android.widget.Spinner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.perpustakaandigital.MainActivity
 import com.example.perpustakaandigital.R
 import com.example.perpustakaandigital.adapter.KategoriAdapter
 import com.example.perpustakaandigital.adapter.RiwayatAdapter
@@ -17,6 +18,7 @@ import com.example.perpustakaandigital.model.Book
 class RiwayatActivity : AppCompatActivity() {
 
     private var bookList: ArrayList<Book> = arrayListOf()
+    lateinit var btnRiwayatBack : ImageView
     lateinit var rvRiwayat : RecyclerView
     lateinit var progressRiwayat: ProgressBar
     lateinit var imvEmpty : ImageView
@@ -25,9 +27,16 @@ class RiwayatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_riwayat)
 
+        btnRiwayatBack = findViewById(R.id.btn_riwayat_back)
         rvRiwayat = findViewById(R.id.rv_riwayat)
         progressRiwayat = findViewById(R.id.progress_riwayat)
         imvEmpty = findViewById(R.id.imgv_empty_riwayat)
+
+        btnRiwayatBack.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("profile", "profile")
+            startActivity(intent)
+        }
 
         progressRiwayat.visibility = View.VISIBLE
         imvEmpty.visibility = View.GONE

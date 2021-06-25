@@ -14,7 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PerpustakaanDigital"
         tools:targetApi="m">
-        <activity android:name=".screen.RiwayatActivity"></activity>
+        <activity android:name=".screen.AboutActivity"></activity>
+        <activity android:name=".screen.ProfileMemberActivity" />
+        <activity android:name=".screen.RiwayatActivity" />
         <activity android:name=".screen.DetailActivity" />
         <activity android:name=".screen.RegisterActivity" />
         <activity

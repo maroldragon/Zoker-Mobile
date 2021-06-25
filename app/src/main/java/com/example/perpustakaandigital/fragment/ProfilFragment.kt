@@ -12,6 +12,8 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import com.bumptech.glide.Glide
 import com.example.perpustakaandigital.R
+import com.example.perpustakaandigital.screen.AboutActivity
+import com.example.perpustakaandigital.screen.ProfileMemberActivity
 import com.example.perpustakaandigital.screen.RiwayatActivity
 
 class ProfilFragment : Fragment() {
@@ -58,7 +60,7 @@ class ProfilFragment : Fragment() {
         }
 
         btn_lihat_profile.setOnClickListener {
-            startActivity(Intent(context, RiwayatActivity::class.java))
+            startActivity(Intent(context, ProfileMemberActivity::class.java))
         }
 
         btn_riwayat.setOnClickListener {
@@ -68,7 +70,7 @@ class ProfilFragment : Fragment() {
             startActivity(Intent(context, RiwayatActivity::class.java))
         }
         btn_tentang.setOnClickListener {
-            startActivity(Intent(context, RiwayatActivity::class.java))
+            startActivity(Intent(context, AboutActivity::class.java))
         }
         btn_keluar.setOnClickListener {
             startActivity(Intent(context, RiwayatActivity::class.java))

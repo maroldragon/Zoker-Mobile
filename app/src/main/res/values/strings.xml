@@ -49,5 +49,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="digital_library_description">Perpustakaan Digital Adalah Layanan Perpustakaan digital dengan konsep easy to use. Kami hadir untuk memudahkan pengguna dalam membaca dan mencari item di perpustakaan digital</string>
+    <string name="digital_library_description2">Membaca Buku, Berbagi koneksi bacaan dan bersosialisasi bersamaan. Dimanapun, kapanpun dengan nyaman dengan setiap orang.</string>
+    <string name="digital_library_description3">Nikmati kemudahaan peminjaman buku, dan berbagai koleksi bacaan terlengkap lainnya dalam satu aplikasi. Coba baca sekarang!</string>
 
 </resources>

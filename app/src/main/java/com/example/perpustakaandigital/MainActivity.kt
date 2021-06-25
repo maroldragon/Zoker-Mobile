@@ -4,16 +4,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.perpustakaandigital.fragment.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var bottomNavigation : com.google.android.material.bottomnavigation.BottomNavigationView
-
+    var fragmentSelected : String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         bottomNavigation = findViewById(R.id.bottom_navigation)
+        fragmentSelected = intent.getStringExtra("profile")
         isSelectedBottomNav(savedInstanceState)
 
     }
@@ -48,7 +50,11 @@ class MainActivity : AppCompatActivity() {
             false
         }
         if (savedInstanceState == null){
-            bottomNavigation.selectedItemId = R.id.menu_home
+            if(fragmentSelected == "profile"){
+                bottom_navigation.selectedItemId = R.id.menu_profil
+            }else {
+                bottom_navigation.selectedItemId = R.id.menu_home
+            }
         }
     }
 
