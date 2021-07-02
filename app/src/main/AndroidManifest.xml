@@ -18,7 +18,6 @@
         <activity android:name=".screen.UlasanActivity" />
         <activity android:name=".screen.DetailNotifActivity" />
         <activity android:name=".screen.SearchResultActivity" />
-        <activity android:name=".screen.DaftarHalamanActivity" />
         <activity android:name=".screen.AboutActivity" />
         <activity android:name=".screen.ProfileMemberActivity" />
         <activity android:name=".screen.RiwayatActivity" />

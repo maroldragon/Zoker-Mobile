@@ -11,15 +11,17 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.perpustakaandigital.model.Book
 import com.example.perpustakaandigital.R
+import com.example.perpustakaandigital.model.Pinjam
 
-class RiwayatAdapter(val bookList: ArrayList<Book>) : RecyclerView.Adapter<RiwayatAdapter.Holder>() {
+class RiwayatAdapter(val pinjamList: ArrayList<Pinjam>) : RecyclerView.Adapter<RiwayatAdapter.Holder>() {
     private lateinit var onItemClickCallback: RiwayatAdapter.OnItemClickCallback
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        val book = bookList[position]
+        val pinjam = pinjamList[position]
+        val book = getBookById(pinjam.bookId)
 
         Glide.with(holder.itemView.context)
                 .load(book.gambar)
@@ -29,8 +31,9 @@ class RiwayatAdapter(val bookList: ArrayList<Book>) : RecyclerView.Adapter<Riway
 
         holder.bookName.text = book.judul
         holder.bookAuthor.text = book.penulis
+        holder.tanggal.text = pinjam.tanggal
 
-        holder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(bookList[holder.adapterPosition]) }
+        holder.pinjam_lagi.setOnClickListener { onItemClickCallback.onItemClicked(pinjamList[holder.adapterPosition]) }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -39,7 +42,7 @@ class RiwayatAdapter(val bookList: ArrayList<Book>) : RecyclerView.Adapter<Riway
     }
 
     override fun getItemCount(): Int {
-        return bookList.size
+        return pinjamList.size
     }
 
     inner class Holder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
@@ -51,7 +54,13 @@ class RiwayatAdapter(val bookList: ArrayList<Book>) : RecyclerView.Adapter<Riway
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: Book)
+        fun onItemClicked(data: Pinjam)
+    }
+
+    fun getBookById(bookId : String?): Book {
+        val book = Book("123", "Milk And Honey","132423423423", "1923", "Erlangga","4.5",
+                "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1534&q=80", "Love", "Evan Owen", "This talk about love and live")
+        return book;
     }
 
 }
