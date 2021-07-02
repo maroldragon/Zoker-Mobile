@@ -43,7 +43,7 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:id="@+id/imgv_detail_"
+                    android:id="@+id/imgv_detail_book"
                     android:layout_width="200dp"
                     android:layout_height="300dp"
                     android:layout_gravity="center"
@@ -102,7 +102,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/spacing_large"
+                android:paddingHorizontal="@dimen/spacing_large"
+                android:paddingTop="@dimen/spacing_large"
+                android:paddingBottom="@dimen/spacing_xlarge"
                 android:orientation="vertical">
 
                 <TextView
@@ -242,73 +244,19 @@
                         android:textSize="17sp"
                         android:textColor="@color/black_promo" />
                 </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/spacing_large"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Feedback"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
-                    android:textColor="@color/black_promo" />
-
-                <TextView
-                    android:layout_width="110dp"
-                    android:layout_height="wrap_content"
-                    android:text="Rating"
-                    android:textSize="17sp"
-                    android:textColor="@color/black_promo" />
-
-                <TextView
-                    android:id="@+id/tv_detail_feedback_rating"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="4.5"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
-                    android:gravity="center"
-                    android:textColor="@color/black_promo" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"/>
-
-                <TextView
-                    android:layout_width="110dp"
-                    android:layout_height="wrap_content"
-                    android:text="Ulasan"
-                    android:textSize="17sp"
-                    android:textColor="@color/black_promo" />
-
-                <EditText
-                    android:id="@+id/et_detail_ulasan"
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:inputType="textMultiLine"
-                    android:textSize="14sp"
-                    android:padding="10dp"
-                    android:background="@drawable/bg_fill_profile"
-                    android:layout_marginStart="@dimen/spacing_medium"
-                    android:layout_marginLeft="@dimen/spacing_medium" />
 
                 <Button
-                    android:id="@+id/btn_detail_kirim"
-                    android:layout_width="wrap_content"
-                    android:layout_height="32dp"
-                    android:layout_gravity="right"
-                    android:layout_marginTop="7dp"
-                    android:text="Kirim"
+                    android:id="@+id/btn_detail_pinjam"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_large"
+                    android:text="Pinjam Buku"
+                    android:background="@drawable/bg_fill_dark"
+                    android:padding="12dp"
                     android:textAllCaps="false"
-                    android:padding="2dp"
-                    android:background="@drawable/bg_fill_category"
                     android:textColor="@color/white"
-                    android:textSize="12sp" />
+                    android:textSize="20sp"
+                    android:layout_gravity="center" />
 
             </LinearLayout>
 

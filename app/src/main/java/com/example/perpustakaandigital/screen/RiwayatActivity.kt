@@ -33,9 +33,7 @@ class RiwayatActivity : AppCompatActivity() {
         imvEmpty = findViewById(R.id.imgv_empty_riwayat)
 
         btnRiwayatBack.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("profile", "profile")
-            startActivity(intent)
+            finish()
         }
 
         progressRiwayat.visibility = View.VISIBLE
@@ -46,8 +44,8 @@ class RiwayatActivity : AppCompatActivity() {
     }
 
     private fun addData() {
-        val book = Book("123", "Milk And Honey",
-            "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1534&q=80", "Love", "Evan Owen", "This talk about love and live")
+        val book = Book("123", "Milk And Honey","132423423423", "1923", "Erlangga","4.5",
+                "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1534&q=80", "Love", "Evan Owen", "This talk about love and live")
         bookList.add(book)
         bookList.add(book)
         showRecyclerRiwayat()

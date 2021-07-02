@@ -9,13 +9,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var bottomNavigation : com.google.android.material.bottomnavigation.BottomNavigationView
-    var fragmentSelected : String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         bottomNavigation = findViewById(R.id.bottom_navigation)
-        fragmentSelected = intent.getStringExtra("profile")
         isSelectedBottomNav(savedInstanceState)
 
     }
@@ -45,16 +43,11 @@ class MainActivity : AppCompatActivity() {
                     replaceFragment(ProfilFragment())
                     return@setOnNavigationItemSelectedListener true
                 }
-
             }
             false
         }
         if (savedInstanceState == null){
-            if(fragmentSelected == "profile"){
-                bottom_navigation.selectedItemId = R.id.menu_profil
-            }else {
-                bottom_navigation.selectedItemId = R.id.menu_home
-            }
+            bottom_navigation.selectedItemId = R.id.menu_home
         }
     }
 

@@ -20,9 +20,7 @@ class AboutActivity : AppCompatActivity() {
         btn_read = findViewById(R.id.btn_tentang_read)
 
         btnBack.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("profile", "profile")
-            startActivity(intent)
+            finish()
         }
 
         btn_read.setOnClickListener {

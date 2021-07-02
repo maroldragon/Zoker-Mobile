@@ -3,11 +3,13 @@ package com.example.perpustakaandigital.fragment
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.*
+import android.widget.TextView.OnEditorActionListener
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.perpustakaandigital.R
@@ -16,15 +18,18 @@ import com.example.perpustakaandigital.adapter.KategoriAdapter
 import com.example.perpustakaandigital.adapter.SliderAdapter
 import com.example.perpustakaandigital.model.Book
 import com.example.perpustakaandigital.screen.DetailActivity
+import com.example.perpustakaandigital.screen.SearchResultActivity
 import com.smarteist.autoimageslider.IndicatorAnimations
 import com.smarteist.autoimageslider.SliderAnimations
 import com.smarteist.autoimageslider.SliderView
+
 
 class HomeFragment : Fragment() {
 
     lateinit var sliderView : SliderView
     private var bookList: ArrayList<Book> = arrayListOf()
     private var bookList2: ArrayList<Book> = arrayListOf()
+    private var bookListSlider: ArrayList<Book> = arrayListOf()
     lateinit var etSearch : EditText
     lateinit var imgv_filter : ImageView
     lateinit var llFilter : LinearLayout
@@ -67,27 +72,47 @@ class HomeFragment : Fragment() {
             }else {
                 llFilter.visibility = View.VISIBLE
             }
-
         }
 
-        val adapterSlider = SliderAdapter(this)
-        adapterSlider.count = 4
-        sliderView.sliderAdapter = adapterSlider
-        sliderView.setIndicatorAnimation(IndicatorAnimations.WORM) //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
-        sliderView.setSliderTransformAnimation(SliderAnimations.CUBEINROTATIONTRANSFORMATION)
-        sliderView.autoCycleDirection = SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH
-        sliderView.indicatorSelectedColor = Color.WHITE
-        sliderView.indicatorUnselectedColor = Color.GRAY
-        sliderView.scrollTimeInSec = 5
-        sliderView.startAutoCycle()
+        btnSearch.setOnClickListener {
+            if(etSearch.text.toString() != "" || etAuthorSearch.text.toString() != "" || etIsbnSearch.text.toString() != ""
+                    || etPenerbitSearch.text.toString() != ""){
 
+                val intent = Intent(context, SearchResultActivity::class.java)
+                intent.putExtra("searching", "on")
+                intent.putExtra("searchTitle", etSearch.text)
+                intent.putExtra("searchAuthor", etAuthorSearch.text)
+                intent.putExtra("searchIsbn", etIsbnSearch.text)
+                intent.putExtra("searchPenerbit", etPenerbitSearch.text)
+                startActivity(intent)
+            }else {
+                Toast.makeText(context, "Tuliskan Keyword Pencarian", Toast.LENGTH_LONG).show()
+            }
+        }
+
+        etSearch.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                if(etSearch.text.toString() != "") {
+                    val intent = Intent(context, SearchResultActivity::class.java)
+                    intent.putExtra("searchTitle", etSearch.text.toString())
+                    startActivity(intent)
+                }else {
+                    Toast.makeText(context, "Tuliskan Keyword Pencarian", Toast.LENGTH_LONG).show()
+                }
+                true
+            } else false
+        })
+
+
+        addDataSlider()
         addData()
         addData2()
         return view
     }
 
     private fun addData() {
-        val book = Book("123", "Milk And Honey",
+        bookList.clear()
+        val book = Book("123", "Milk And Honey","132423423423", "1923", "Erlangga","4.5",
                 "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1534&q=80", "Love", "Evan Owen", "This talk about love and live")
         bookList.add(book)
         bookList.add(book)
@@ -97,13 +122,47 @@ class HomeFragment : Fragment() {
     }
 
     private fun addData2() {
-        val book = Book("123", "Milk And Honey",
+        bookList2.clear()
+        val book = Book("123", "Milk And Honey","132423423423", "1923", "Erlangga","4.5",
                 "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1534&q=80", "Love", "Evan Owen", "This talk about love and live")
-        bookList2.add(book)
+        bookList.add(book)
         bookList2.add(book)
         bookList2.add(book)
         bookList2.add(book)
         showRecyclerRecommend()
+    }
+
+    private fun addDataSlider() {
+        bookListSlider.clear()
+        val book = Book("123", "Milk And Honey","132423423423", "1923", "Erlangga","4.5",
+                "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1534&q=80", "Love", "Evan Owen", "This talk about love and live")
+        bookListSlider.add(book)
+        bookListSlider.add(book)
+        bookListSlider.add(book)
+        bookListSlider.add(book)
+        showSlider()
+    }
+
+    private fun showSlider() {
+        val adapterSlider = SliderAdapter(context, bookListSlider)
+        adapterSlider.count = 4
+        sliderView.sliderAdapter = adapterSlider
+        sliderView.setIndicatorAnimation(IndicatorAnimations.WORM) //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
+        sliderView.setSliderTransformAnimation(SliderAnimations.CUBEINROTATIONTRANSFORMATION)
+        sliderView.autoCycleDirection = SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH
+        sliderView.indicatorSelectedColor = Color.WHITE
+        sliderView.indicatorUnselectedColor = Color.GRAY
+        sliderView.scrollTimeInSec = 5
+
+        adapterSlider.setOnItemClickCallback(object : SliderAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: Book) {
+                val intents = Intent(activity, DetailActivity::class.java)
+                intents.putExtra(DetailActivity.EXTRA_BOOK, data)
+                startActivity(intents)
+            }
+        })
+
+        sliderView.startAutoCycle()
     }
 
     private fun showRecyclerHomeNew() {
@@ -117,7 +176,6 @@ class HomeFragment : Fragment() {
         }else {
             imvEmptyHomeNew.visibility = View.GONE
         }
-
 
         homeNewAdapter.setOnItemClickCallback(object : HomeNewAdapter.OnItemClickCallback {
             override fun onItemClicked(data: Book) {

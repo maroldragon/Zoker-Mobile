@@ -22,14 +22,15 @@ class KategoriAdapter(val bookList: ArrayList<Book>) : RecyclerView.Adapter<Kate
         val book = bookList[position]
 
         Glide.with(holder.itemView.context)
-                .load("https://m.media-amazon.com/images/I/51AUQJVbXJL.jpg")
+                .load(book.gambar)
                 .centerCrop()
+                .placeholder(R.drawable.no_image)
                 .into(holder.imgPhoto)
 
-        holder.bookName.text = book.name
-        holder.bookAuthor.text = book.author
+        holder.bookTitle.text = book.judul
+        holder.bookAuthor.text = book.penulis
 
-        holder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(bookList[holder.adapterPosition]) }
+        holder.button_pratinjau.setOnClickListener { onItemClickCallback.onItemClicked(bookList[holder.adapterPosition]) }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -43,7 +44,7 @@ class KategoriAdapter(val bookList: ArrayList<Book>) : RecyclerView.Adapter<Kate
 
     inner class Holder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
         var imgPhoto: ImageView = itemView!!.findViewById(R.id.imgv_category)
-        var bookName: TextView = itemView!!.findViewById(R.id.tv_category_name)
+        var bookTitle: TextView = itemView!!.findViewById(R.id.tv_category_name)
         var bookAuthor : TextView = itemView!!.findViewById(R.id.tv_category_author)
         var button_pratinjau : Button = itemView!!.findViewById(R.id.btn_kategori_pratinjau)
     }

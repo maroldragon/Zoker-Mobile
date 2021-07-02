@@ -11,9 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.perpustakaandigital.R
 import com.example.perpustakaandigital.adapter.KategoriAdapter
-import com.example.perpustakaandigital.adapter.MyItemAdapter
 import com.example.perpustakaandigital.model.Book
 import com.example.perpustakaandigital.screen.DetailActivity
+import com.example.perpustakaandigital.screen.SearchResultActivity
+
 class MyItemFragment : Fragment() {
     private var bookList: ArrayList<Book> = arrayListOf()
     lateinit var etSearch : EditText
@@ -51,7 +52,10 @@ class MyItemFragment : Fragment() {
             }else {
                 llFilter.visibility = View.VISIBLE
             }
+        }
 
+        btnSearch.setOnClickListener {
+            startActivity(Intent(context, SearchResultActivity::class.java))
         }
 
         progressMyItem.visibility = View.VISIBLE
@@ -63,17 +67,16 @@ class MyItemFragment : Fragment() {
     }
 
     private fun addData() {
-        val book = Book("123", "Milk And Honey",
+        val book = Book("123", "Milk And Honey","132423423423", "1923", "Erlangga","4.5",
                 "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1534&q=80", "Love", "Evan Owen", "This talk about love and live")
         bookList.add(book)
         bookList.add(book)
         showRecyclerMyItem()
     }
 
-
     private fun showRecyclerMyItem() {
         rvMyItem.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        val myItemAdapter = MyItemAdapter(bookList)
+        val myItemAdapter = KategoriAdapter(bookList)
         rvMyItem.adapter = myItemAdapter
 
         progressMyItem.visibility = View.GONE
@@ -83,10 +86,10 @@ class MyItemFragment : Fragment() {
             imvEmpty.visibility = View.GONE
         }
 
-
-        myItemAdapter.setOnItemClickCallback(object : MyItemAdapter.OnItemClickCallback {
+        myItemAdapter.setOnItemClickCallback(object : KategoriAdapter.OnItemClickCallback {
             override fun onItemClicked(data: Book) {
                 val intents = Intent(activity, DetailActivity::class.java)
+                intents.putExtra("myItem", "on")
                 intents.putExtra(DetailActivity.EXTRA_BOOK, data)
                 startActivity(intents)
             }

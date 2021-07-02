@@ -15,6 +15,7 @@ import com.example.perpustakaandigital.R
 import com.example.perpustakaandigital.screen.AboutActivity
 import com.example.perpustakaandigital.screen.ProfileMemberActivity
 import com.example.perpustakaandigital.screen.RiwayatActivity
+import com.example.perpustakaandigital.screen.SearchResultActivity
 
 class ProfilFragment : Fragment() {
 
@@ -56,13 +57,14 @@ class ProfilFragment : Fragment() {
             }else {
                 llFilter.visibility = View.VISIBLE
             }
-
         }
 
+        btnSearch.setOnClickListener {
+            startActivity(Intent(context, SearchResultActivity::class.java))
+        }
         btn_lihat_profile.setOnClickListener {
             startActivity(Intent(context, ProfileMemberActivity::class.java))
         }
-
         btn_riwayat.setOnClickListener {
             startActivity(Intent(context, RiwayatActivity::class.java))
         }

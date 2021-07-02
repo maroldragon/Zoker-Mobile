@@ -1,19 +1,27 @@
 package com.example.perpustakaandigital.adapter
 
-import android.widget.TextView
+import android.content.Context
+import android.content.Intent
 import com.smarteist.autoimageslider.SliderViewAdapter
 import com.bumptech.glide.Glide
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.FrameLayout
-import android.widget.ImageView
+import android.widget.*
+import androidx.core.content.ContextCompat.startActivity
+import com.example.perpustakaandigital.MainActivity
 import com.example.perpustakaandigital.fragment.HomeFragment
 import com.example.perpustakaandigital.R
+import com.example.perpustakaandigital.model.Book
+import com.example.perpustakaandigital.model.Notif
 
-class SliderAdapter(private val context: HomeFragment) : SliderViewAdapter<SliderAdapter.SliderAdapterVH>() {
+class SliderAdapter(val context: Context?, val bookList: ArrayList<Book>) : SliderViewAdapter<SliderAdapter.SliderAdapterVH>() {
     private var mCount: Int = 0
+
+    private lateinit var onItemClickCallback: OnItemClickCallback
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback
+    }
 
     fun setCount(count: Int) {
         this.mCount = count
@@ -26,56 +34,60 @@ class SliderAdapter(private val context: HomeFragment) : SliderViewAdapter<Slide
 
     override fun onBindViewHolder(viewHolder: SliderAdapterVH, position: Int) {
 
-        viewHolder.itemView.setOnClickListener { }
-
         when (position) {
             0 -> {
-                viewHolder.textViewTitle.text = "Love And Live Saemhdasfsdsdfsdfsdfs dfsdfsdfsd sdfsd"
-                viewHolder.textViewAuthor.text = "Evan Owen Pasaribu"
-//                viewHolder.textViewDescription.textSize = 16f
-//                viewHolder.textViewDescription.setTextColor(Color.WHITE)
+                viewHolder.textViewTitle.text = bookList[position].judul
+                viewHolder.textViewAuthor.text = bookList[position].penulis
                 viewHolder.shadowContainer.visibility = View.VISIBLE
                 viewHolder.imageGifContainer.visibility = View.GONE
                 Glide.with(viewHolder.itemView)
-                    .load(R.drawable.image_book_sampel)
+                    .load(bookList[position].gambar)
                     .fitCenter()
+                    .placeholder(R.drawable.no_image)
                     .into(viewHolder.imageViewBackground)
+
+                viewHolder.btnPratinjau.setOnClickListener { onItemClickCallback.onItemClicked(bookList[position]) }
             }
             1 -> {
-                viewHolder.textViewTitle.text = "Love And Live"
-                viewHolder.textViewAuthor.text = "Evan Owen"
-//                viewHolder.textViewDescription.textSize = 16f
-//                viewHolder.textViewDescription.setTextColor(Color.WHITE)
+                viewHolder.textViewTitle.text = bookList[position].judul
+                viewHolder.textViewAuthor.text = bookList[position].penulis
                 viewHolder.shadowContainer.visibility = View.VISIBLE
                 viewHolder.imageGifContainer.visibility = View.GONE
                 Glide.with(viewHolder.itemView)
-                    .load(R.drawable.image_book_sampel)
-                    .fitCenter()
-                    .into(viewHolder.imageViewBackground)
+                        .load(bookList[position].gambar)
+                        .fitCenter()
+                        .placeholder(R.drawable.no_image)
+                        .into(viewHolder.imageViewBackground)
+                viewHolder.btnPratinjau.setOnClickListener { onItemClickCallback.onItemClicked(bookList[position]) }
             }
             2 -> {
-                viewHolder.textViewTitle.text = "Love And Live"
-                viewHolder.textViewAuthor.text = "Evan Owen"
+                viewHolder.textViewTitle.text = bookList[position].judul
+                viewHolder.textViewAuthor.text = bookList[position].penulis
 //                viewHolder.textViewDescription.textSize = 16f
 //                viewHolder.textViewDescription.setTextColor(Color.WHITE)
                 viewHolder.shadowContainer.visibility = View.VISIBLE
                 viewHolder.imageGifContainer.visibility = View.GONE
                 Glide.with(viewHolder.itemView)
-                        .load(R.drawable.image_book_sampel)
+                        .load(bookList[position].gambar)
                         .fitCenter()
+                        .placeholder(R.drawable.no_image)
                         .into(viewHolder.imageViewBackground)
+                viewHolder.btnPratinjau.setOnClickListener { onItemClickCallback.onItemClicked(bookList[position]) }
             }
             3 -> {
-                viewHolder.textViewTitle.text = "Love And Live"
-                viewHolder.textViewAuthor.text = "Evan Owen"
-//                viewHolder.textViewDescription.textSize = 16f
-//                viewHolder.textViewDescription.setTextColor(Color.WHITE)
+                viewHolder.textViewTitle.text = bookList[position].judul
+                viewHolder.textViewAuthor.text = bookList[position].penulis
+                viewHolder.btnPratinjau.setOnClickListener {
+                    //startActivity(Intent(context, MainActivity::class.java))
+                }
                 viewHolder.imageGifContainer.visibility = View.GONE
                 viewHolder.shadowContainer.visibility = View.VISIBLE
                 Glide.with(viewHolder.itemView)
-                    .load(R.drawable.image_book_sampel)
-                    .fitCenter()
-                    .into(viewHolder.imageViewBackground)
+                        .load(bookList[position].gambar)
+                        .fitCenter()
+                        .placeholder(R.drawable.no_image)
+                        .into(viewHolder.imageViewBackground)
+                viewHolder.btnPratinjau.setOnClickListener { onItemClickCallback.onItemClicked(bookList[position]) }
             }
 /*            else -> {
                 viewHolder.textViewDescription.textSize = 29f
@@ -108,5 +120,9 @@ class SliderAdapter(private val context: HomeFragment) : SliderViewAdapter<Slide
         var btnPratinjau: Button = itemView.findViewById(R.id.btn_pratinjau_slider)
         var shadowContainer : FrameLayout = itemView.findViewById(R.id.fl_shadow_container)
 
+    }
+
+    interface OnItemClickCallback {
+        fun onItemClicked(data: Book)
     }
 }

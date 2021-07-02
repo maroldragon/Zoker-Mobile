@@ -3,6 +3,7 @@ package com.example.perpustakaandigital.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -23,7 +24,8 @@ class NotifikasiAdapter(val notifList: ArrayList<Notif>) : RecyclerView.Adapter<
         holder.judul.text = notif.title
         holder.status.text = notif.status
 
-        holder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(notifList[holder.adapterPosition]) }
+        holder.pratinjau.setOnClickListener {  onItemClickCallback.onItemClicked(notifList[holder.adapterPosition])}
+//        holder.itemView.setOnClickListener {  }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -38,6 +40,7 @@ class NotifikasiAdapter(val notifList: ArrayList<Notif>) : RecyclerView.Adapter<
     inner class Holder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
         var judul: TextView = itemView!!.findViewById(R.id.tv_judul_notifikasi)
         var status : TextView = itemView!!.findViewById(R.id.tv_status_notifikasi)
+        var pratinjau : Button = itemView!!.findViewById(R.id.btn_notifikasi_lihat)
     }
 
     interface OnItemClickCallback {

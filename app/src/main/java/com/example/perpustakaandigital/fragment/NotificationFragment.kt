@@ -13,6 +13,8 @@ import com.example.perpustakaandigital.R
 import com.example.perpustakaandigital.adapter.NotifikasiAdapter
 import com.example.perpustakaandigital.model.Notif
 import com.example.perpustakaandigital.screen.DetailActivity
+import com.example.perpustakaandigital.screen.DetailNotifActivity
+import com.example.perpustakaandigital.screen.SearchResultActivity
 
 class NotificationFragment : Fragment() {
     private var notifList: ArrayList<Notif> = arrayListOf()
@@ -51,7 +53,10 @@ class NotificationFragment : Fragment() {
             }else {
                 llFilter.visibility = View.VISIBLE
             }
+        }
 
+        btnSearch.setOnClickListener {
+            startActivity(Intent(context, SearchResultActivity::class.java))
         }
 
         progressNotif.visibility = View.VISIBLE
@@ -66,11 +71,12 @@ class NotificationFragment : Fragment() {
         val notif = Notif("1234", "Harry Potter And Then",
                "Peminjaman Buku Berhasil", "false")
         notifList.add(notif)
+        notifList.add(notif)
         showRecyclerNotifikasi()
     }
 
     private fun showRecyclerNotifikasi() {
-        rvNotif.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        rvNotif.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         val notifAdapter = NotifikasiAdapter(notifList)
         rvNotif.adapter = notifAdapter
 
@@ -84,8 +90,8 @@ class NotificationFragment : Fragment() {
 
         notifAdapter.setOnItemClickCallback(object : NotifikasiAdapter.OnItemClickCallback {
             override fun onItemClicked(data: Notif) {
-                val intents = Intent(activity, DetailActivity::class.java)
-                intents.putExtra(DetailActivity.EXTRA_BOOK, data)
+                val intents = Intent(activity, DetailNotifActivity::class.java)
+                intents.putExtra(DetailNotifActivity.EXTRA_NOTIF, data)
                 startActivity(intents)
             }
         })

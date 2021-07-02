@@ -22,12 +22,13 @@ class RiwayatAdapter(val bookList: ArrayList<Book>) : RecyclerView.Adapter<Riway
         val book = bookList[position]
 
         Glide.with(holder.itemView.context)
-                .load("https://m.media-amazon.com/images/I/51AUQJVbXJL.jpg")
+                .load(book.gambar)
                 .centerCrop()
+                .placeholder(R.drawable.no_image)
                 .into(holder.imgPhoto)
 
-        holder.bookName.text = book.name
-        holder.bookAuthor.text = book.author
+        holder.bookName.text = book.judul
+        holder.bookAuthor.text = book.penulis
 
         holder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(bookList[holder.adapterPosition]) }
     }

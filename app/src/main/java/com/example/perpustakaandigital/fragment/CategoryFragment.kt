@@ -7,14 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.perpustakaandigital.R
 import com.example.perpustakaandigital.adapter.KategoriAdapter
 import com.example.perpustakaandigital.model.Book
 import com.example.perpustakaandigital.screen.DetailActivity
+import com.example.perpustakaandigital.screen.SearchResultActivity
 
-class CategoryFragment : Fragment() {
+class CategoryFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private var bookList: ArrayList<Book> = arrayListOf()
     lateinit var etSearch : EditText
@@ -24,7 +26,7 @@ class CategoryFragment : Fragment() {
     lateinit var etIsbnSearch : EditText
     lateinit var etPenerbitSearch : EditText
     lateinit var btnSearch : Button
-    lateinit var spinKateogri : Spinner
+    lateinit var spinKategori : Spinner
     lateinit var rvKategori : RecyclerView
     lateinit var progressKategori: ProgressBar
     lateinit var imvEmpty : ImageView
@@ -43,7 +45,7 @@ class CategoryFragment : Fragment() {
         etIsbnSearch = view.findViewById(R.id.et_kategori_search_isbn)
         etPenerbitSearch = view.findViewById(R.id.et_kategori_search_penerbit)
         btnSearch = view.findViewById(R.id.btn_kategori_search)
-        spinKateogri = view.findViewById(R.id.spin_kategori)
+        spinKategori = view.findViewById(R.id.spin_kategori)
         rvKategori = view.findViewById(R.id.rv_kategori)
         progressKategori = view.findViewById(R.id.progress_kategori)
         imvEmpty = view.findViewById(R.id.imgv_empty_kategori)
@@ -54,7 +56,10 @@ class CategoryFragment : Fragment() {
             }else {
                 llFilter.visibility = View.VISIBLE
             }
+        }
 
+        btnSearch.setOnClickListener {
+            startActivity(Intent(context, SearchResultActivity::class.java))
         }
 
         ArrayAdapter.createFromResource(
@@ -65,38 +70,55 @@ class CategoryFragment : Fragment() {
             // Specify the layout to use when the list of choices appears
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             // Apply the adapter to the spinner
-            spinKateogri.adapter = adapter
+            spinKategori.adapter = adapter
         }
 
         progressKategori.visibility = View.VISIBLE
         imvEmpty.visibility = View.GONE
         rvKategori.setHasFixedSize(true)
-        addData()
+
+        spinKategori.onItemSelectedListener = this
+
+        addData("")
 
         return view
     }
 
-    private fun addData() {
-        val book = Book("123", "Milk And Honey",
-            "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1534&q=80", "Love", "Evan Owen", "This talk about love and live")
+    private fun addData(kategori : String) {
+        bookList.clear()
+        val book = Book("123", "Milk And Honey","132423423423", "1923", "Erlangga","4.5",
+                "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1534&q=80", "Love", "Evan Owen", "This talk about love and live")
         bookList.add(book)
         bookList.add(book)
-        showRecyclerKategori()
+        showRecyclerKategori(bookList)
     }
 
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        Toast.makeText(context, spinKategori.getSelectedItem().toString(), Toast.LENGTH_LONG).show()
+    }
 
-    private fun showRecyclerKategori() {
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        progressKategori.visibility = View.VISIBLE
+        imvEmpty.visibility = View.GONE
+
+        if(position != 0) {
+            addData(spinKategori.getSelectedItem().toString())
+        }else {
+            addData("")
+        }
+    }
+
+    private fun showRecyclerKategori(bookListParams: ArrayList<Book>) {
         rvKategori.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        val kategoriAdapter = KategoriAdapter(bookList)
+        val kategoriAdapter = KategoriAdapter(bookListParams)
         rvKategori.adapter = kategoriAdapter
 
         progressKategori.visibility = View.GONE
-        if(bookList.size == 0){
+        if(bookListParams.size == 0){
             imvEmpty.visibility = View.VISIBLE
         }else {
             imvEmpty.visibility = View.GONE
         }
-
 
         kategoriAdapter.setOnItemClickCallback(object : KategoriAdapter.OnItemClickCallback {
             override fun onItemClicked(data: Book) {

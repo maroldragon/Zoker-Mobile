@@ -19,9 +19,7 @@ class ProfileMemberActivity : AppCompatActivity() {
         btnBack = findViewById(R.id.btn_profile_member_back)
 
         btnBack.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("profile", "profile")
-            startActivity(intent)
+            finish()
         }
 
     }

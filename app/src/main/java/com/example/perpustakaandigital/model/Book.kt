@@ -4,14 +4,22 @@ import android.os.Parcel
 import android.os.Parcelable
 
 class Book(
-        var id : String?,
-        var name : String?,
-        var image : String?,
-        var category : String?,
-        var author : String?,
-        var description : String?
+        var bookId : String?,
+        var judul : String?,
+        var isbn : String?,
+        var tahun_terbit : String?,
+        var penerbit : String?,
+        var rating : String?,
+        var gambar : String?,
+        var kategori : String?,
+        var penulis : String?,
+        var deskripsi : String?
 ): Parcelable {
         constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -21,12 +29,16 @@ class Book(
         }
 
         override fun writeToParcel(p0: Parcel?, p1: Int) {
-                p0?.writeString(id)
-                p0?.writeString(name)
-                p0?.writeString(image)
-                p0?.writeString(category)
-                p0?.writeString(author)
-                p0?.writeString(description)
+                p0?.writeString(bookId)
+                p0?.writeString(judul)
+                p0?.writeString(isbn)
+                p0?.writeString(tahun_terbit)
+                p0?.writeString(penerbit)
+                p0?.writeString(rating)
+                p0?.writeString(gambar)
+                p0?.writeString(kategori)
+                p0?.writeString(penulis)
+                p0?.writeString(deskripsi)
         }
 
         override fun describeContents(): Int {

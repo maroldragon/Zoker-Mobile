@@ -14,13 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PerpustakaanDigital"
         tools:targetApi="m">
-        <activity android:name=".screen.DaftarHalamanActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".screen.ReadBookActivity"></activity>
+        <activity android:name=".screen.UlasanActivity" />
+        <activity android:name=".screen.DetailNotifActivity" />
+        <activity android:name=".screen.SearchResultActivity" />
+        <activity android:name=".screen.DaftarHalamanActivity" />
         <activity android:name=".screen.AboutActivity" />
         <activity android:name=".screen.ProfileMemberActivity" />
         <activity android:name=".screen.RiwayatActivity" />
@@ -30,7 +28,11 @@
             android:name=".screen.LoginActivity"
             android:label="Login" />
         <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

@@ -21,12 +21,14 @@ class HomeNewAdapter(val bookList: ArrayList<Book>) : RecyclerView.Adapter<HomeN
         val book = bookList[position]
 
         Glide.with(holder.itemView.context)
-                .load("https://m.media-amazon.com/images/I/51AUQJVbXJL.jpg")
+                .load(book.gambar)
                 .centerCrop()
+                .placeholder(R.drawable.no_image)
                 .into(holder.imgPhoto)
 
-        holder.bookName.text = book.name
-        holder.bookAuthor.text = book.author
+        holder.bookTitle.text = book.judul
+        holder.bookAuthor.text = book.penulis
+        holder.rating.text = book.rating
 
         holder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(bookList[holder.adapterPosition]) }
     }
@@ -43,7 +45,7 @@ class HomeNewAdapter(val bookList: ArrayList<Book>) : RecyclerView.Adapter<HomeN
     inner class Holder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
         var imgPhoto: ImageView = itemView!!.findViewById(R.id.imgv_home_new)
         var rating: TextView = itemView!!.findViewById(R.id.tv_rating_home_new)
-        var bookName: TextView = itemView!!.findViewById(R.id.tv_home_new_name)
+        var bookTitle: TextView = itemView!!.findViewById(R.id.tv_home_new_name)
         var bookAuthor : TextView = itemView!!.findViewById(R.id.tv_home_new_author)
     }
 
