@@ -6,16 +6,22 @@ import android.text.InputType
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.example.perpustakaandigital.MainActivity
 import com.example.perpustakaandigital.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import kotlinx.android.synthetic.main.activity_login.*
 
 
 class LoginActivity : AppCompatActivity() {
+    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     private lateinit var imgv_visibility : ImageView
-    private lateinit var text_username : EditText
-    private lateinit var text_password : EditText
+    private lateinit var username : EditText
+    private lateinit var password : EditText
     private lateinit var btn_daftar : Button
     private lateinit var btn_login : Button
     var status_img_pass = true
@@ -24,8 +30,8 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         imgv_visibility = findViewById<ImageView>(R.id.imgv_visibility)
-        text_username = findViewById(R.id.edt_username)
-        text_password = findViewById(R.id.edt_password)
+        username = findViewById(R.id.edt_username)
+        password = findViewById(R.id.edt_password)
         btn_daftar = findViewById(R.id.btn_daftar)
         btn_login = findViewById(R.id.btn_login)
         imgv_visibility.setOnClickListener {
@@ -36,7 +42,7 @@ class LoginActivity : AppCompatActivity() {
                                 R.drawable.ic_visibility_on // Drawable
                         )
                 )
-                text_password.setInputType(InputType.TYPE_CLASS_TEXT)
+                password.setInputType(InputType.TYPE_CLASS_TEXT)
                 status_img_pass = false
             }else {
                 imgv_visibility.setImageDrawable(
@@ -45,15 +51,65 @@ class LoginActivity : AppCompatActivity() {
                                 R.drawable.ic_visibility_off // Drawable
                         )
                 )
-                text_password.setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)
+                password.setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)
                 status_img_pass = true
             }
         }
 
         btn_daftar.setOnClickListener {
-            var intent = Intent(this, RegisterActivity::class.java)
+            val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
 
+        btn_login.setOnClickListener {
+            if(checkInput()) {
+                auth.signInWithEmailAndPassword(username.text.toString(), password.text.toString())
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            val user = auth.currentUser
+                            updateUI(user)
+                        } else {
+                            updateUI(null)
+                            // ...
+                        }
+                        // ...
+                    }
+
+                //For Development
+                //startActivity(Intent(this, MainActivity::class.java))
+
+            }
+        }
+
     }
+
+    // Fungsi pengecekan apakah user sudah login
+    public override fun onStart() {
+        super.onStart()
+        val currentUser = auth.currentUser
+        updateUI(currentUser)
+    }
+
+    // FUngsi navigasi jika login berhasil, mengarah ke halaman home
+    private fun updateUI(currentUser : FirebaseUser?){
+        if (currentUser != null){
+            startActivity(Intent(baseContext, MainActivity::class.java))
+            finish()
+        }
+        else{
+            Toast.makeText(baseContext, "Login failed.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    //Pengecekan Inputan apakah sudah lengkap
+    private fun checkInput() : Boolean{
+        return if(username.text.toString().trim() == ""){
+            Toast.makeText(baseContext, "Silahkan Isi Email", Toast.LENGTH_LONG).show()
+            false
+        }else if(password.text.toString().trim() == ""){
+            Toast.makeText(baseContext, "Silahkan Isi Password", Toast.LENGTH_LONG).show()
+            false
+        }else true
+    }
+
 }

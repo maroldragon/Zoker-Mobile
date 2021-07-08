@@ -68,31 +68,14 @@ class ReadBookActivity : AppCompatActivity(), OnPageChangeListener, OnLoadComple
 
     override fun loadComplete(nbPages: Int) {
         val meta = pdfView!!.documentMeta
-        Log.e(TAG,
-            "title = " + meta.title
-        )
-        Log.e(TAG,
-            "author = " + meta.author
-        )
-        Log.e(TAG,
-            "subject = " + meta.subject
-        )
-        Log.e(TAG,
-            "keywords = " + meta.keywords
-        )
-        Log.e(TAG,
-            "creator = " + meta.creator
-        )
-        Log.e(TAG,
-            "producer = " + meta.producer
-        )
-        Log.e(TAG,
-            "creationDate = " + meta.creationDate
-        )
-        Log.e(TAG,
-            "modDate = " + meta.modDate
-        )
-
+        Log.e(TAG, "title = " + meta.title)
+        Log.e(TAG, "author = " + meta.author)
+        Log.e(TAG, "subject = " + meta.subject)
+        Log.e(TAG, "keywords = " + meta.keywords)
+        Log.e(TAG, "creator = " + meta.creator)
+        Log.e(TAG, "producer = " + meta.producer)
+        Log.e(TAG, "creationDate = " + meta.creationDate)
+        Log.e(TAG, "modDate = " + meta.modDate)
         printBookmarksTree(pdfView!!.tableOfContents, "-")
     }
 
