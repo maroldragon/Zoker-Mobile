@@ -1,15 +1,29 @@
 package com.example.perpustakaandigital.screen
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.example.perpustakaandigital.MainActivity
 import com.example.perpustakaandigital.R
+import com.example.perpustakaandigital.model.Book
+import com.example.perpustakaandigital.model.Peminjaman
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.activity_detail.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class DetailActivity : AppCompatActivity() {
+    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
+    private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
+    private var dbRef: DatabaseReference = database.reference
     companion object {
         const val EXTRA_BOOK = "extra_book"
     }
@@ -17,7 +31,9 @@ class DetailActivity : AppCompatActivity() {
 
     lateinit var btn_back : ImageView
     lateinit var btn_pinjam_baca : Button
+    lateinit var btn_ulasan : Button
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
@@ -25,18 +41,62 @@ class DetailActivity : AppCompatActivity() {
         myItem = intent.getStringExtra("myItem")
         btn_back = findViewById(R.id.btn_detail_back)
         btn_pinjam_baca = findViewById(R.id.btn_detail_pinjam)
+        btn_ulasan= findViewById(R.id.btn_detail_ulasan)
 
         if(myItem == "on") {
             btn_pinjam_baca.setText("Baca Buku")
+        }else {
+            btn_ulasan.visibility = View.GONE
         }
+
+        val book = intent.getParcelableExtra<Book>(EXTRA_BOOK) as Book
+
+        Glide.with(this)
+            .load(book.cover)
+            .centerCrop()
+            .placeholder(R.drawable.no_image)
+            .into(imgv_detail_book)
+
+        tv_detail_author.text = book.penulis
+        tv_detail_author2.text = ":  " + book.penulis
+        tv_detail_title.text = ":  " + book.judul
+        tv_detail_isbn.text = ":  " + book.isbn
+        tv_detail_klasifikasi.text = ":  " + book.kategori
+        tv_detail_penerbit.text = ":  " + book.penerbit
+        val rate = book.rating?.toDouble()
+        tv_detail_rating.text = String.format("%.1f", rate).toDouble().toString()
+        tv_detail_tahun_terbit.text = ":  " + book.tahunTerbit
+        var deskripsi = book.deskripsi as String
+        if(deskripsi.length >= 200){
+            deskripsi = deskripsi.substring(0,199) + "..."
+        }
+        tv_detail_ringkasan.text = ":  " + deskripsi
 
         btn_pinjam_baca.setOnClickListener {
             if(myItem == "on"){
                 val intent = Intent(this, ReadBookActivity::class.java)
+                intent.putExtra("FILE", book.file)
                 startActivity(intent)
             }else {
-                Toast.makeText(this, "Peminjaman Sedang Diproses", Toast.LENGTH_LONG).show()
+                val idUser = auth.currentUser?.uid
+                val idPeminjaman = UUID.randomUUID().toString()
+                val idBuku = book.isbn
+                val dateFormat = SimpleDateFormat("dd/M/yyyy")
+                val currentDate = dateFormat.format(Date())
+                val pinjam = Peminjaman(idPeminjaman, idUser, idBuku, currentDate, "unfinished")
+                dbRef.child("peminjaman").child(idPeminjaman).setValue(pinjam).addOnSuccessListener {
+                    Toast.makeText(this, "Buku Berhasil Dipinjam", Toast.LENGTH_LONG).show()
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("PINJAM", "buku")
+                    startActivity(intent)
+                }
             }
+        }
+
+        btn_ulasan.setOnClickListener {
+            val intent = Intent(this, UlasanActivity::class.java)
+            intent.putExtra("EXTRA_BOOK", book)
+            startActivity(intent)
         }
 
         btn_back.setOnClickListener {

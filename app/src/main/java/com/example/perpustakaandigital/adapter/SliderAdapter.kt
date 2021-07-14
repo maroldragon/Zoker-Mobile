@@ -36,12 +36,14 @@ class SliderAdapter(val context: Context?, val bookList: ArrayList<Book>) : Slid
 
         when (position) {
             0 -> {
-                viewHolder.textViewTitle.text = bookList[position].judul
+                var judul = bookList[position].judul as String
+                if(judul.length > 25) judul = judul.substring(0,24)
+                viewHolder.textViewTitle.text = judul
                 viewHolder.textViewAuthor.text = bookList[position].penulis
                 viewHolder.shadowContainer.visibility = View.VISIBLE
                 viewHolder.imageGifContainer.visibility = View.GONE
                 Glide.with(viewHolder.itemView)
-                    .load(bookList[position].gambar)
+                    .load(bookList[position].cover)
                     .fitCenter()
                     .placeholder(R.drawable.no_image)
                     .into(viewHolder.imageViewBackground)
@@ -49,33 +51,39 @@ class SliderAdapter(val context: Context?, val bookList: ArrayList<Book>) : Slid
                 viewHolder.btnPratinjau.setOnClickListener { onItemClickCallback.onItemClicked(bookList[position]) }
             }
             1 -> {
-                viewHolder.textViewTitle.text = bookList[position].judul
+                var judul = bookList[position].judul as String
+                if(judul.length > 25) judul = judul.substring(0,24)
+                viewHolder.textViewTitle.text = judul
                 viewHolder.textViewAuthor.text = bookList[position].penulis
                 viewHolder.shadowContainer.visibility = View.VISIBLE
                 viewHolder.imageGifContainer.visibility = View.GONE
                 Glide.with(viewHolder.itemView)
-                        .load(bookList[position].gambar)
+                        .load(bookList[position].cover)
                         .fitCenter()
                         .placeholder(R.drawable.no_image)
                         .into(viewHolder.imageViewBackground)
                 viewHolder.btnPratinjau.setOnClickListener { onItemClickCallback.onItemClicked(bookList[position]) }
             }
             2 -> {
-                viewHolder.textViewTitle.text = bookList[position].judul
+                var judul = bookList[position].judul as String
+                if(judul.length > 25) judul = judul.substring(0,24)
+                viewHolder.textViewTitle.text = judul
                 viewHolder.textViewAuthor.text = bookList[position].penulis
 //                viewHolder.textViewDescription.textSize = 16f
 //                viewHolder.textViewDescription.setTextColor(Color.WHITE)
                 viewHolder.shadowContainer.visibility = View.VISIBLE
                 viewHolder.imageGifContainer.visibility = View.GONE
                 Glide.with(viewHolder.itemView)
-                        .load(bookList[position].gambar)
+                        .load(bookList[position].cover)
                         .fitCenter()
                         .placeholder(R.drawable.no_image)
                         .into(viewHolder.imageViewBackground)
                 viewHolder.btnPratinjau.setOnClickListener { onItemClickCallback.onItemClicked(bookList[position]) }
             }
             3 -> {
-                viewHolder.textViewTitle.text = bookList[position].judul
+                var judul = bookList[position].judul as String
+                if(judul.length > 25) judul = judul.substring(0,24)
+                viewHolder.textViewTitle.text = judul
                 viewHolder.textViewAuthor.text = bookList[position].penulis
                 viewHolder.btnPratinjau.setOnClickListener {
                     //startActivity(Intent(context, MainActivity::class.java))
@@ -83,7 +91,7 @@ class SliderAdapter(val context: Context?, val bookList: ArrayList<Book>) : Slid
                 viewHolder.imageGifContainer.visibility = View.GONE
                 viewHolder.shadowContainer.visibility = View.VISIBLE
                 Glide.with(viewHolder.itemView)
-                        .load(bookList[position].gambar)
+                        .load(bookList[position].cover)
                         .fitCenter()
                         .placeholder(R.drawable.no_image)
                         .into(viewHolder.imageViewBackground)

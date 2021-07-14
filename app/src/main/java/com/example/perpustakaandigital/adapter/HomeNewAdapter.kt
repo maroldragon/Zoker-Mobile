@@ -21,12 +21,13 @@ class HomeNewAdapter(val bookList: ArrayList<Book>) : RecyclerView.Adapter<HomeN
         val book = bookList[position]
 
         Glide.with(holder.itemView.context)
-                .load(book.gambar)
+                .load(book.cover)
                 .centerCrop()
                 .placeholder(R.drawable.no_image)
                 .into(holder.imgPhoto)
-
-        holder.bookTitle.text = book.judul
+        var judul = book.judul as String
+        if(judul.length > 30) judul = judul.substring(0,29)
+        holder.bookTitle.text = judul
         holder.bookAuthor.text = book.penulis
         holder.rating.text = book.rating
 

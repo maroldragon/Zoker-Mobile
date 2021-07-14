@@ -8,12 +8,17 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.example.perpustakaandigital.model.Book
 import com.example.perpustakaandigital.R
-import com.example.perpustakaandigital.model.Pinjam
+import com.example.perpustakaandigital.model.Peminjaman
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 
-class RiwayatAdapter(val pinjamList: ArrayList<Pinjam>) : RecyclerView.Adapter<RiwayatAdapter.Holder>() {
+class RiwayatAdapter(val pinjamList: ArrayList<Peminjaman>) : RecyclerView.Adapter<RiwayatAdapter.Holder>() {
+    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
+    private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
+    private var dbRef: DatabaseReference = database.reference
+
     private lateinit var onItemClickCallback: RiwayatAdapter.OnItemClickCallback
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
@@ -21,18 +26,10 @@ class RiwayatAdapter(val pinjamList: ArrayList<Pinjam>) : RecyclerView.Adapter<R
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val pinjam = pinjamList[position]
-        val book = getBookById(pinjam.bookId)
+        generateBook(pinjam.idBuku, holder)
 
-        Glide.with(holder.itemView.context)
-                .load(book.gambar)
-                .centerCrop()
-                .placeholder(R.drawable.no_image)
-                .into(holder.imgPhoto)
-
-        holder.bookName.text = book.judul
-        holder.bookAuthor.text = book.penulis
         holder.tanggal.text = pinjam.tanggal
-
+        holder.pinjam_lagi.visibility = View.GONE
         holder.pinjam_lagi.setOnClickListener { onItemClickCallback.onItemClicked(pinjamList[holder.adapterPosition]) }
     }
 
@@ -54,13 +51,31 @@ class RiwayatAdapter(val pinjamList: ArrayList<Pinjam>) : RecyclerView.Adapter<R
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: Pinjam)
+        fun onItemClicked(data: Peminjaman)
     }
 
-    fun getBookById(bookId : String?): Book {
-        val book = Book("123", "Milk And Honey","132423423423", "1923", "Erlangga","4.5",
-                "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1534&q=80", "Love", "Evan Owen", "This talk about love and live")
-        return book;
+    fun generateBook(idBuku: String?, holder: Holder) {
+        val query: Query = dbRef.child("books").orderByChild("isbn").equalTo(idBuku)
+        query.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+            override fun onDataChange(p0: DataSnapshot) {
+                if(p0.exists()){
+                    for (p in p0.children){
+                        val book = p.getValue(Book::class.java)
+                        Glide.with(holder.itemView.context)
+                            .load(book?.cover)
+                            .centerCrop()
+                            .placeholder(R.drawable.no_image)
+                            .into(holder.imgPhoto)
+
+                        holder.bookName.text = book?.judul
+                        holder.bookAuthor.text = book?.penulis
+                    }
+                }
+            }
+        })
     }
 
 }

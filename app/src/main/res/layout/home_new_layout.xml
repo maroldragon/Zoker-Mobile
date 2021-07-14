@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="120dp"
+    android:layout_marginHorizontal="@dimen/spacing_medium"
     android:layout_height="wrap_content">
 
     <LinearLayout
@@ -23,9 +24,13 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/image_book_sampel" />
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="3dp"
+                android:padding="4dp"
+                android:layout_margin="@dimen/spacing_small"
+                android:backgroundTint="@color/black_promo"
+                android:alpha="0.85"
+                android:background="@drawable/bg_fill_empty"
                 android:orientation="horizontal">
 
                 <ImageView

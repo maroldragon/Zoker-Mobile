@@ -17,10 +17,10 @@
         android:title="My Item"
         android:icon="@drawable/ic_bookmark"/>
 
-    <item
-        android:id="@+id/menu_notification"
-        android:title="Notifikasi"
-        android:icon="@drawable/ic_notifications"/>
+<!--    <item-->
+<!--        android:id="@+id/menu_notification"-->
+<!--        android:title="Notifikasi"-->
+<!--        android:icon="@drawable/ic_notifications"/>-->
 
     <item
         android:id="@+id/menu_profil"

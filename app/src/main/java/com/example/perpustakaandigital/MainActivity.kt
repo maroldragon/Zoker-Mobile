@@ -7,11 +7,14 @@ import com.example.perpustakaandigital.fragment.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+    var state: String? = ""
 
     private lateinit var bottomNavigation : com.google.android.material.bottomnavigation.BottomNavigationView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        state = intent.getStringExtra("PINJAM")
 
         bottomNavigation = findViewById(R.id.bottom_navigation)
         isSelectedBottomNav(savedInstanceState)
@@ -35,10 +38,10 @@ class MainActivity : AppCompatActivity() {
                     replaceFragment(MyItemFragment())
                     return@setOnNavigationItemSelectedListener true
                 }
-                R.id.menu_notification -> {
-                    replaceFragment(NotificationFragment())
-                    return@setOnNavigationItemSelectedListener true
-                }
+//                R.id.menu_notification -> {
+//                    replaceFragment(NotificationFragment())
+//                    return@setOnNavigationItemSelectedListener true
+//                }
                 R.id.menu_profil -> {
                     replaceFragment(ProfilFragment())
                     return@setOnNavigationItemSelectedListener true
@@ -47,7 +50,11 @@ class MainActivity : AppCompatActivity() {
             false
         }
         if (savedInstanceState == null){
-            bottom_navigation.selectedItemId = R.id.menu_home
+            if(state == "buku"){
+                bottom_navigation.selectedItemId = R.id.menu_bookmark
+            }else {
+                bottom_navigation.selectedItemId = R.id.menu_home
+            }
         }
     }
 

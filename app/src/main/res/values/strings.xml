@@ -43,8 +43,11 @@
 
     <string-array name="kategori_array">
         <item>Semua Kategori</item>
-        <item>History</item>
-        <item>Aksi</item>
+        <item>fiction</item>
+        <item>social science</item>
+        <item>actresses</item>
+        <item>medical</item>
+        <item>nature</item>
     </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->

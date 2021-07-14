@@ -15,9 +15,14 @@ import com.example.perpustakaandigital.adapter.KategoriAdapter
 import com.example.perpustakaandigital.model.Book
 import com.example.perpustakaandigital.screen.DetailActivity
 import com.example.perpustakaandigital.screen.SearchResultActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.fragment_category.*
 
 class CategoryFragment : Fragment(), AdapterView.OnItemSelectedListener {
-
+    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
+    private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
+    private var dbRef: DatabaseReference = database.reference
     private var bookList: ArrayList<Book> = arrayListOf()
     lateinit var etSearch : EditText
     lateinit var imgv_filter : ImageView
@@ -79,19 +84,19 @@ class CategoryFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
         spinKategori.onItemSelectedListener = this
 
-        addData("")
+        loadDataBukuKategori("")
 
         return view
     }
 
-    private fun addData(kategori : String) {
-        bookList.clear()
-        val book = Book("123", "Milk And Honey","132423423423", "1923", "Erlangga","4.5",
-                "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1534&q=80", "Love", "Evan Owen", "This talk about love and live")
-        bookList.add(book)
-        bookList.add(book)
-        showRecyclerKategori(bookList)
-    }
+//    private fun addData(kategori : String) {
+//        bookList.clear()
+//        val book = Book("123", "Milk And Honey","132423423423", "1923", "Erlangga","4.5",
+//                "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1534&q=80", "Love", "Evan Owen", "This talk about love and live")
+//        bookList.add(book)
+//        bookList.add(book)
+//        showRecyclerKategori(bookList)
+//    }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
         Toast.makeText(context, spinKategori.getSelectedItem().toString(), Toast.LENGTH_LONG).show()
@@ -100,11 +105,12 @@ class CategoryFragment : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         progressKategori.visibility = View.VISIBLE
         imvEmpty.visibility = View.GONE
-
+        val bookListFilter: ArrayList<Book> = arrayListOf()
+        val kategori = spinKategori.getSelectedItem().toString()
         if(position != 0) {
-            addData(spinKategori.getSelectedItem().toString())
+            loadDataBukuKategori(kategori)
         }else {
-            addData("")
+            loadDataBukuKategori("")
         }
     }
 
@@ -125,6 +131,38 @@ class CategoryFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 val intents = Intent(activity, DetailActivity::class.java)
                 intents.putExtra(DetailActivity.EXTRA_BOOK, data)
                 startActivity(intents)
+            }
+        })
+    }
+
+    private fun loadDataBukuKategori(kategori: String){
+        // Get data from firebase
+        bookList.clear()
+        val query: Query
+        if(kategori != ""){
+            query = dbRef.child("books").orderByChild("kategori").equalTo(kategori)
+        }else {
+            query = dbRef.child("books").orderByChild("kategori")
+        }
+
+        query.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+            override fun onDataChange(p0: DataSnapshot) {
+                if(p0.exists()){
+                    for (p in p0.children){
+                        val book = p.getValue(Book::class.java)
+                        bookList.add(book!!)
+                    }
+                    showRecyclerKategori(bookList)
+                    progressKategori.visibility = View.GONE
+                }
+                else{
+                    showRecyclerKategori(bookList)
+                    progressKategori.visibility = View.GONE
+                    imvEmpty.visibility = View.VISIBLE
+                }
             }
         })
     }

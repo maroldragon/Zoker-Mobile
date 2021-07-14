@@ -85,17 +85,19 @@
 
                 <TextView
                     android:id="@+id/tv_detail_rating"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
+                    android:drawableLeft="@drawable/ic_star"
+                    android:drawablePadding="5dp"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textAllCaps="true"
                     android:textColor="@color/black"
                     android:paddingHorizontal="@dimen/spacing_xlarge"
                     android:layout_marginBottom="@dimen/spacing_large"
-                    android:text="4.5 / 5.0"/>
+                    android:text="4.5"/>
 
             </LinearLayout>
 
@@ -168,7 +170,7 @@
                     <TextView
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
-                        android:text="Klasifikasi"
+                        android:text="Kategori"
                         android:textSize="17sp"
                         android:textColor="@color/black_promo" />
                     <TextView
@@ -226,6 +228,10 @@
                         android:textColor="@color/black_promo" />
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -251,6 +257,22 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_large"
                     android:text="Pinjam Buku"
+                    android:background="@drawable/bg_fill_dark"
+                    android:padding="12dp"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:layout_gravity="center" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/spacing_large"/>
+
+                <Button
+                    android:id="@+id/btn_detail_ulasan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Berikan Ulasan"
                     android:background="@drawable/bg_fill_dark"
                     android:padding="12dp"
                     android:textAllCaps="false"

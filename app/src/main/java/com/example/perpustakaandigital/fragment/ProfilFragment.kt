@@ -103,8 +103,8 @@ class ProfilFragment : Fragment() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if(dataSnapshot.exists()){
                     val user: User = dataSnapshot.getValue(User::class.java)!!
-                    username.text = user.userName
-                    email.text = (user.email)?.substring(10)
+                    username.text = user.namaDepan + " " + user.namaBelakang
+                    email.text = user.userName
                     country.text = user.negara
                     if(user.photo != ""){
                         Glide.with(context!!).load(user.photo).into(photo)

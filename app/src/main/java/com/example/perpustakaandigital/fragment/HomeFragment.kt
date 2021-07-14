@@ -19,16 +19,22 @@ import com.example.perpustakaandigital.adapter.SliderAdapter
 import com.example.perpustakaandigital.model.Book
 import com.example.perpustakaandigital.screen.DetailActivity
 import com.example.perpustakaandigital.screen.SearchResultActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 import com.smarteist.autoimageslider.IndicatorAnimations
 import com.smarteist.autoimageslider.SliderAnimations
 import com.smarteist.autoimageslider.SliderView
+import kotlinx.android.synthetic.main.fragment_home.*
 
 
 class HomeFragment : Fragment() {
+    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
+    private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
+    private var dbRef: DatabaseReference = database.reference
 
     lateinit var sliderView : SliderView
     private var bookList: ArrayList<Book> = arrayListOf()
-    private var bookList2: ArrayList<Book> = arrayListOf()
+    private var bookListRecomd: ArrayList<Book> = arrayListOf()
     private var bookListSlider: ArrayList<Book> = arrayListOf()
     lateinit var etSearch : EditText
     lateinit var imgv_filter : ImageView
@@ -103,45 +109,50 @@ class HomeFragment : Fragment() {
             } else false
         })
 
-
-        addDataSlider()
-        addData()
-        addData2()
+        progressHomeRecommend.visibility = View.VISIBLE
+        imvEmptyHomeRecommend.visibility = View.GONE
+        rvHomeRecommend.setHasFixedSize(true)
+        progressHomeNew.visibility = View.VISIBLE
+        imvEmptyHomeNew.visibility = View.GONE
+        rvHomeNew.setHasFixedSize(true)
+        loadDataSlider()
+        loadDataBukuNew()
+        loadDataBuku()
         return view
     }
 
-    private fun addData() {
-        bookList.clear()
-        val book = Book("123", "Milk And Honey","132423423423", "1923", "Erlangga","4.5",
-                "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1534&q=80", "Love", "Evan Owen", "This talk about love and live")
-        bookList.add(book)
-        bookList.add(book)
-        bookList.add(book)
-        bookList.add(book)
-        showRecyclerHomeNew()
-    }
+//    private fun addData() {
+//        bookList.clear()
+//        val book = Book("123", "Milk And Honey","132423423423", "1923", "Erlangga","4.5",
+//                "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1534&q=80", "Love", "Evan Owen", "This talk about love and live")
+//        bookList.add(book)
+//        bookList.add(book)
+//        bookList.add(book)
+//        bookList.add(book)
+//        showRecyclerHomeNew()
+//    }
 
-    private fun addData2() {
-        bookList2.clear()
-        val book = Book("123", "Milk And Honey","132423423423", "1923", "Erlangga","4.5",
-                "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1534&q=80", "Love", "Evan Owen", "This talk about love and live")
-        bookList.add(book)
-        bookList2.add(book)
-        bookList2.add(book)
-        bookList2.add(book)
-        showRecyclerRecommend()
-    }
+//    private fun addData2() {
+//        bookListRecomd.clear()
+//        val book = Book("123", "Milk And Honey","132423423423", "1923", "Erlangga","4.5",
+//                "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1534&q=80", "Love", "Evan Owen", "This talk about love and live")
+//        bookListRecomd.add(book)
+//        bookListRecomd.add(book)
+//        bookListRecomd.add(book)
+//        bookListRecomd.add(book)
+//        showRecyclerRecommend()
+//    }
 
-    private fun addDataSlider() {
-        bookListSlider.clear()
-        val book = Book("123", "Milk And Honey","132423423423", "1923", "Erlangga","4.5",
-                "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1534&q=80", "Love", "Evan Owen", "This talk about love and live")
-        bookListSlider.add(book)
-        bookListSlider.add(book)
-        bookListSlider.add(book)
-        bookListSlider.add(book)
-        showSlider()
-    }
+//    private fun addDataSlider() {
+//        bookListSlider.clear()
+//        val book = Book("123", "Milk And Honey","132423423423.pdf", "1923", "Erlangga","4.5",
+//                "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1534&q=80", "Love", "Evan Owen", "This talk about love and live")
+//        bookListSlider.add(book)
+//        bookListSlider.add(book)
+//        bookListSlider.add(book)
+//        bookListSlider.add(book)
+//        showSlider()
+//    }
 
     private fun showSlider() {
         val adapterSlider = SliderAdapter(context, bookListSlider)
@@ -170,13 +181,6 @@ class HomeFragment : Fragment() {
         val homeNewAdapter = HomeNewAdapter(bookList)
         rvHomeNew.adapter = homeNewAdapter
 
-        progressHomeNew.visibility = View.GONE
-        if(bookList.size == 0){
-            imvEmptyHomeNew.visibility = View.VISIBLE
-        }else {
-            imvEmptyHomeNew.visibility = View.GONE
-        }
-
         homeNewAdapter.setOnItemClickCallback(object : HomeNewAdapter.OnItemClickCallback {
             override fun onItemClicked(data: Book) {
                 val intents = Intent(activity, DetailActivity::class.java)
@@ -188,16 +192,8 @@ class HomeFragment : Fragment() {
 
     private fun showRecyclerRecommend() {
         rvHomeRecommend.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        val recommendationAdapter = KategoriAdapter(bookList)
+        val recommendationAdapter = KategoriAdapter(bookListRecomd)
         rvHomeRecommend.adapter = recommendationAdapter
-
-        progressHomeRecommend.visibility = View.GONE
-        if(bookList.size == 0){
-            imvEmptyHomeRecommend.visibility = View.VISIBLE
-        }else {
-            imvEmptyHomeRecommend.visibility = View.GONE
-        }
-
 
         recommendationAdapter.setOnItemClickCallback(object : KategoriAdapter.OnItemClickCallback {
             override fun onItemClicked(data: Book) {
@@ -207,5 +203,77 @@ class HomeFragment : Fragment() {
             }
         })
     }
+
+    // Fungsi get data rs dari database
+    private fun loadDataBuku(){
+        // Get data from firebase
+        val query: Query = dbRef.child("books").orderByChild("rating").limitToLast(5)
+        query.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+            override fun onDataChange(p0: DataSnapshot) {
+                if(p0.exists()){
+                    for (p in p0.children){
+                        val book = p.getValue(Book::class.java)
+                        bookListRecomd.add(book!!)
+                    }
+                    showRecyclerRecommend()
+                    progressHomeRecommend.visibility = View.GONE
+                }
+                else{
+                    progressHomeRecommend.visibility = View.GONE
+                    imvEmptyHomeRecommend.visibility = View.VISIBLE
+                }
+            }
+        })
+    }
+
+    private fun loadDataBukuNew(){
+        // Get data from firebase
+        val query: Query = dbRef.child("books").limitToFirst(5)
+        query.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+            override fun onDataChange(p0: DataSnapshot) {
+                if(p0.exists()){
+                    for (p in p0.children){
+                        val book = p.getValue(Book::class.java)
+                        bookList.add(book!!)
+                    }
+                    showRecyclerHomeNew()
+                    progressHomeNew.visibility = View.GONE
+                }
+                else{
+                    progressHomeNew.visibility = View.GONE
+                    imvEmptyHomeNew.visibility = View.VISIBLE
+                }
+            }
+        })
+    }
+
+    // Fungsi get data rs dari database
+    private fun loadDataSlider(){
+        // Get data from firebase
+        val query: Query = dbRef.child("books").orderByChild("rating").limitToLast(4)
+        query.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+            override fun onDataChange(p0: DataSnapshot) {
+                if(p0.exists()){
+                    for (p in p0.children){
+                        val book = p.getValue(Book::class.java)
+                        bookListSlider.add(book!!)
+                    }
+                    showSlider()
+                }
+                else{
+                }
+            }
+        })
+    }
+
 
 }

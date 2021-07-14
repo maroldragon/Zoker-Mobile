@@ -22,7 +22,7 @@ class KategoriAdapter(val bookList: ArrayList<Book>) : RecyclerView.Adapter<Kate
         val book = bookList[position]
 
         Glide.with(holder.itemView.context)
-                .load(book.gambar)
+                .load(book.cover)
                 .centerCrop()
                 .placeholder(R.drawable.no_image)
                 .into(holder.imgPhoto)

@@ -12,11 +12,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.perpustakaandigital.R
 import com.example.perpustakaandigital.adapter.KategoriAdapter
 import com.example.perpustakaandigital.model.Book
+import com.example.perpustakaandigital.model.Peminjaman
 import com.example.perpustakaandigital.screen.DetailActivity
 import com.example.perpustakaandigital.screen.SearchResultActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 
 class MyItemFragment : Fragment() {
+    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
+    private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
+    private var dbRef: DatabaseReference = database.reference
     private var bookList: ArrayList<Book> = arrayListOf()
+    private var dataPinjam: ArrayList<Peminjaman> = arrayListOf()
     lateinit var etSearch : EditText
     lateinit var imgv_filter : ImageView
     lateinit var llFilter : LinearLayout
@@ -61,30 +68,23 @@ class MyItemFragment : Fragment() {
         progressMyItem.visibility = View.VISIBLE
         imvEmpty.visibility = View.GONE
         rvMyItem.setHasFixedSize(true)
-        addData()
+        loadDataMyItem()
 
         return view
     }
 
-    private fun addData() {
-        val book = Book("123", "Milk And Honey","132423423423", "1923", "Erlangga","4.5",
-                "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1534&q=80", "Love", "Evan Owen", "This talk about love and live")
-        bookList.add(book)
-        bookList.add(book)
-        showRecyclerMyItem()
-    }
+//    private fun addData() {
+//        val book = Book("123", "Milk And Honey","132423423423", "1923", "Erlangga","4.5",
+//                "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1534&q=80", "Love", "Evan Owen", "This talk about love and live")
+//        bookList.add(book)
+//        bookList.add(book)
+//        showRecyclerMyItem()
+//    }
 
     private fun showRecyclerMyItem() {
         rvMyItem.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         val myItemAdapter = KategoriAdapter(bookList)
         rvMyItem.adapter = myItemAdapter
-
-        progressMyItem.visibility = View.GONE
-        if(bookList.size == 0){
-            imvEmpty.visibility = View.VISIBLE
-        }else {
-            imvEmpty.visibility = View.GONE
-        }
 
         myItemAdapter.setOnItemClickCallback(object : KategoriAdapter.OnItemClickCallback {
             override fun onItemClicked(data: Book) {
@@ -95,4 +95,49 @@ class MyItemFragment : Fragment() {
             }
         })
     }
+
+    private fun loadDataMyItem(){
+        // Get data from firebase
+        bookList.clear()
+        val idUser = auth.currentUser?.uid
+        val query: Query = dbRef.child("peminjaman").orderByChild("idUser").equalTo(idUser)
+        query.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+            override fun onDataChange(p0: DataSnapshot) {
+                if(p0.exists()){
+                    for (p in p0.children){
+                        val pinjam = p.getValue(Peminjaman::class.java)
+                        getBookData(pinjam?.idBuku as String)
+                    }
+                    progressMyItem.visibility = View.GONE
+                }
+                else{
+                    progressMyItem.visibility = View.GONE
+                    imvEmpty.visibility = View.VISIBLE
+                }
+            }
+        })
+    }
+
+    private fun getBookData(idBuku: String){
+        // Get data from firebase
+        val query: Query = dbRef.child("books").orderByChild("isbn").equalTo(idBuku)
+        query.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+            override fun onDataChange(p0: DataSnapshot) {
+                if(p0.exists()){
+                    for (p in p0.children){
+                        val book = p.getValue(Book::class.java)
+                        bookList.add(book!!)
+                    }
+                    showRecyclerMyItem()
+                }
+            }
+        })
+    }
+
 }

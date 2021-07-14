@@ -13,8 +13,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.perpustakaandigital.R
 import com.example.perpustakaandigital.adapter.KategoriAdapter
 import com.example.perpustakaandigital.model.Book
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 
 class SearchResultActivity : AppCompatActivity() {
+    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
+    private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
+    private var dbRef: DatabaseReference = database.reference
+    
     var searching : String? = null
     var searchTitle: String? = null
     var searchAuthor: String? = null
@@ -22,6 +28,7 @@ class SearchResultActivity : AppCompatActivity() {
     var searchPenerbit : String? = null
 
     private var bookList: ArrayList<Book> = arrayListOf()
+    private var bookListFilter: ArrayList<Book> = arrayListOf()
     lateinit var etSearch : EditText
     lateinit var imgv_filter : ImageView
     lateinit var llFilter : LinearLayout
@@ -30,7 +37,7 @@ class SearchResultActivity : AppCompatActivity() {
     lateinit var etPenerbitSearch : EditText
     lateinit var btnSearch : Button
     lateinit var rvKategori : RecyclerView
-    lateinit var progressKategori: ProgressBar
+    lateinit var progressSearch: ProgressBar
     lateinit var imvEmpty : ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +52,7 @@ class SearchResultActivity : AppCompatActivity() {
         etPenerbitSearch = findViewById(R.id.et_result_search_penerbit)
         btnSearch = findViewById(R.id.btn_result_search)
         rvKategori = findViewById(R.id.rv_result_search)
-        progressKategori = findViewById(R.id.progress_result)
+        progressSearch = findViewById(R.id.progress_result)
         imvEmpty = findViewById(R.id.imgv_empty_result)
 
         searching = intent.getStringExtra("searching")
@@ -56,7 +63,8 @@ class SearchResultActivity : AppCompatActivity() {
             searchPenerbit = intent.getStringExtra("searchPenerbit")
             addDataKompleks(searchTitle.toString(), searchAuthor.toString(), searchIsbn.toString(), searchPenerbit.toString())
         }else {
-            addData(searchTitle.toString())
+            etSearch.setText(searchTitle)
+            //addData()
         }
 
         imgv_filter.setOnClickListener {
@@ -83,32 +91,37 @@ class SearchResultActivity : AppCompatActivity() {
                 if (etSearch.text.toString() != "") {
                     val imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.hideSoftInputFromWindow(etSearch.windowToken, 0)
-                    addData(etSearch.text.toString())
+                    addData()
                 } else {
                     Toast.makeText(this, "Tuliskan Keyword Pencarian", Toast.LENGTH_LONG).show()
                 }
                 true
             } else false
         })
-
+        progressSearch.visibility = View.VISIBLE
+        imvEmpty.visibility = View.GONE
         rvKategori.setHasFixedSize(true)
-
+        loadDataBukuSearch()
     }
 
-    private fun addData(title: String) {
-        bookList.clear()
-        progressKategori.visibility = View.VISIBLE
-        imvEmpty.visibility = View.GONE
-        val book = Book("123", "Milk And Honey","132423423423", "1923", "Erlangga","4.5",
-                "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1534&q=80", "Love", "Evan Owen", "This talk about love and live")
-        bookList.add(book)
-        bookList.add(book)
-        showRecyclerResultSearch(bookList)
+    private fun addData() {
+        bookListFilter.clear()
+        for(i in 0..bookList.size-1){
+            if((bookList[i].judul!!.toLowerCase())!!.contains(etSearch.text.toString().toLowerCase())){
+                bookListFilter.add(bookList[i])
+            }
+        }
+        if(bookListFilter.size == 0) {
+            imvEmpty.visibility = View.VISIBLE
+        }else {
+            //Toast.makeText(this@SearchResultActivity, bookList.toString(), Toast.LENGTH_LONG).show()
+            showRecyclerResultSearch(bookListFilter)
+        }
     }
 
     private fun addDataKompleks(title : String, author : String, isbn : String, penerbit: String) {
         bookList.clear()
-        progressKategori.visibility = View.VISIBLE
+        progressSearch.visibility = View.VISIBLE
         imvEmpty.visibility = View.GONE
         val book = Book("123", "Milk And Honey","132423423423", "1923", "Erlangga","4.5",
                 "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1534&q=80", "Love", "Evan Owen", "This talk about love and live")
@@ -122,19 +135,36 @@ class SearchResultActivity : AppCompatActivity() {
         val kategoriAdapter = KategoriAdapter(bookListParams)
         rvKategori.adapter = kategoriAdapter
 
-        progressKategori.visibility = View.GONE
-        if(bookListParams.size == 0){
-            imvEmpty.visibility = View.VISIBLE
-        }else {
-            imvEmpty.visibility = View.GONE
-        }
-
         kategoriAdapter.setOnItemClickCallback(object : KategoriAdapter.OnItemClickCallback {
             override fun onItemClicked(data: Book) {
                 val intents = Intent(this@SearchResultActivity, DetailActivity::class.java)
                 intents.putExtra(DetailActivity.EXTRA_BOOK, data)
                 intents.putExtra("searchResult", "searchResult")
                 startActivity(intents)
+            }
+        })
+    }
+
+    private fun loadDataBukuSearch(){
+        // Get data from firebase
+        val query: Query = dbRef.child("books")
+        query.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+            override fun onDataChange(p0: DataSnapshot) {
+                if(p0.exists()){
+                    for (p in p0.children){
+                        val book = p.getValue(Book::class.java)
+                        bookList.add(book!!)
+                    }
+                    addData()
+                    progressSearch.visibility = View.GONE
+                }
+                else{
+                    progressSearch.visibility = View.GONE
+                    imvEmpty.visibility = View.VISIBLE
+                }
             }
         })
     }
