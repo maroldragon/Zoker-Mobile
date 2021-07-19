@@ -17,5 +17,5 @@ class User (
     var alamat : String?= "",
     var email : String?= "",
     var password : String= "",
-    var isAdmin: Int=0
+    var status : String=""
 )

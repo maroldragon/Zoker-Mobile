@@ -63,8 +63,7 @@ class DetailActivity : AppCompatActivity() {
         tv_detail_isbn.text = ":  " + book.isbn
         tv_detail_klasifikasi.text = ":  " + book.kategori
         tv_detail_penerbit.text = ":  " + book.penerbit
-        val rate = book.rating?.toDouble()
-        tv_detail_rating.text = String.format("%.1f", rate).toDouble().toString()
+        tv_detail_rating.text = book.rating
         tv_detail_tahun_terbit.text = ":  " + book.tahunTerbit
         var deskripsi = book.deskripsi as String
         if(deskripsi.length >= 200){
@@ -79,7 +78,7 @@ class DetailActivity : AppCompatActivity() {
                 startActivity(intent)
             }else {
                 val idUser = auth.currentUser?.uid
-                val idPeminjaman = UUID.randomUUID().toString()
+                val idPeminjaman = idUser + "-" + book.isbn
                 val idBuku = book.isbn
                 val dateFormat = SimpleDateFormat("dd/M/yyyy")
                 val currentDate = dateFormat.format(Date())

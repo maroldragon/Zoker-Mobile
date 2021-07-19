@@ -49,8 +49,7 @@ class UlasanActivity : AppCompatActivity() {
         ratingBar = findViewById(R.id.ratingBar_Ulasan)
 
         val book = intent.getParcelableExtra<Book>("EXTRA_BOOK") as Book
-        val rate = book.rating?.toDouble()
-        rating.text = String.format("%.1f", rate).toDouble().toString()
+        rating.text = book.rating
         Glide.with(this)
             .load(book.cover)
             .centerCrop()

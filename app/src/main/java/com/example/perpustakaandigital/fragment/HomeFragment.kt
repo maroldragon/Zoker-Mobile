@@ -3,6 +3,7 @@ package com.example.perpustakaandigital.fragment
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import com.example.perpustakaandigital.adapter.HomeNewAdapter
 import com.example.perpustakaandigital.adapter.KategoriAdapter
 import com.example.perpustakaandigital.adapter.SliderAdapter
 import com.example.perpustakaandigital.model.Book
+import com.example.perpustakaandigital.model.RatingPrediksi
 import com.example.perpustakaandigital.screen.DetailActivity
 import com.example.perpustakaandigital.screen.SearchResultActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -34,6 +36,7 @@ class HomeFragment : Fragment() {
 
     lateinit var sliderView : SliderView
     private var bookList: ArrayList<Book> = arrayListOf()
+    private var ratingListPrediction: ArrayList<RatingPrediksi> = arrayListOf()
     private var bookListRecomd: ArrayList<Book> = arrayListOf()
     private var bookListSlider: ArrayList<Book> = arrayListOf()
     lateinit var etSearch : EditText
@@ -117,7 +120,7 @@ class HomeFragment : Fragment() {
         rvHomeNew.setHasFixedSize(true)
         loadDataSlider()
         loadDataBukuNew()
-        loadDataBuku()
+        getListRatingPrediction()
         return view
     }
 
@@ -130,28 +133,6 @@ class HomeFragment : Fragment() {
 //        bookList.add(book)
 //        bookList.add(book)
 //        showRecyclerHomeNew()
-//    }
-
-//    private fun addData2() {
-//        bookListRecomd.clear()
-//        val book = Book("123", "Milk And Honey","132423423423", "1923", "Erlangga","4.5",
-//                "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1534&q=80", "Love", "Evan Owen", "This talk about love and live")
-//        bookListRecomd.add(book)
-//        bookListRecomd.add(book)
-//        bookListRecomd.add(book)
-//        bookListRecomd.add(book)
-//        showRecyclerRecommend()
-//    }
-
-//    private fun addDataSlider() {
-//        bookListSlider.clear()
-//        val book = Book("123", "Milk And Honey","132423423423.pdf", "1923", "Erlangga","4.5",
-//                "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1534&q=80", "Love", "Evan Owen", "This talk about love and live")
-//        bookListSlider.add(book)
-//        bookListSlider.add(book)
-//        bookListSlider.add(book)
-//        bookListSlider.add(book)
-//        showSlider()
 //    }
 
     private fun showSlider() {
@@ -204,10 +185,42 @@ class HomeFragment : Fragment() {
         })
     }
 
-    // Fungsi get data rs dari database
-    private fun loadDataBuku(){
+    private fun getListRatingPrediction() {
         // Get data from firebase
-        val query: Query = dbRef.child("books").orderByChild("rating").limitToLast(5)
+        val idUser = auth.uid.toString()
+        val query: Query = dbRef.child("ratingPrediksi").orderByChild("idUser").equalTo(idUser)
+        query.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+            override fun onDataChange(p0: DataSnapshot) {
+                if(p0.exists()){
+                    for (p in p0.children){
+                        val ratingPrediksi = p.getValue(RatingPrediksi::class.java)
+                        ratingListPrediction.add(ratingPrediksi!!)
+                    }
+
+                    ratingListPrediction.sortByDescending { it.rating.toString().toFloat() }
+
+                    for(i in 0..ratingListPrediction.size-1){
+                        Log.d("caca", ratingListPrediction[i].rating.toString())
+                        loadDataBuku(ratingListPrediction[i].idBuku as String)
+                    }
+                    //showRecyclerRecommend()
+                    progressHomeRecommend.visibility = View.GONE
+                }
+                else{
+                    progressHomeRecommend.visibility = View.GONE
+                    imvEmptyHomeRecommend.visibility = View.VISIBLE
+                }
+            }
+        })
+    }
+
+    // Fungsi get data rs dari database
+    private fun loadDataBuku(isbn:String){
+        // Get data from firebase
+        val query: Query = dbRef.child("books").orderByChild("isbn").equalTo(isbn)
         query.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

@@ -29,26 +29,26 @@
                         android:id="@+id/et_kategori_search_item"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text"
-                        android:textSize="18sp"
-                        android:drawableLeft="@drawable/ic_search"
-                        android:padding="10dp"
-                        android:hint="Cari Item"
                         android:layout_marginHorizontal="@dimen/spacing_large"
                         android:background="@drawable/bg_fill_grey"
+                        android:drawableLeft="@drawable/ic_search"
                         android:drawablePadding="10dp"
-                        android:imeOptions="actionSearch" />
+                        android:hint="Cari Item"
+                        android:imeOptions="actionSearch"
+                        android:inputType="text"
+                        android:padding="10dp"
+                        android:textSize="18sp" />
 
                     <ImageView
                         android:id="@+id/imgv_kategori_search_filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_filter"
-                        android:layout_centerInParent="true"
-                        android:padding="12dp"
-                        android:layout_marginHorizontal="@dimen/spacing_large"
                         android:layout_alignParentRight="true"
-                        android:layout_marginRight="20dp" />
+                        android:layout_centerInParent="true"
+                        android:layout_marginHorizontal="@dimen/spacing_large"
+                        android:layout_marginRight="20dp"
+                        android:padding="12dp"
+                        android:src="@drawable/ic_filter" />
 
                 </RelativeLayout>
 
@@ -56,51 +56,53 @@
                     android:id="@+id/ll_kategori_filter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <EditText
                         android:id="@+id/et_kategori_search_author"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/spacing_large"
+                        android:layout_marginVertical="@dimen/spacing_small"
+                        android:background="@drawable/bg_fill_grey"
                         android:hint="Nama Penulis"
                         android:paddingHorizontal="25dp"
-                        android:paddingVertical="3dp"
-                        android:layout_marginVertical="@dimen/spacing_small"
-                        android:layout_marginHorizontal="@dimen/spacing_large"
-                        android:background="@drawable/bg_fill_grey" />
+                        android:paddingVertical="3dp" />
+
                     <EditText
                         android:id="@+id/et_kategori_search_isbn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/spacing_large"
+                        android:layout_marginVertical="@dimen/spacing_small"
+                        android:background="@drawable/bg_fill_grey"
                         android:hint="ISBN"
                         android:paddingHorizontal="25dp"
-                        android:paddingVertical="3dp"
-                        android:layout_marginVertical="@dimen/spacing_small"
-                        android:layout_marginHorizontal="@dimen/spacing_large"
-                        android:background="@drawable/bg_fill_grey" />
+                        android:paddingVertical="3dp" />
+
                     <EditText
                         android:id="@+id/et_kategori_search_penerbit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/spacing_large"
+                        android:layout_marginVertical="@dimen/spacing_small"
+                        android:background="@drawable/bg_fill_grey"
                         android:hint="Penerbit"
                         android:paddingHorizontal="25dp"
-                        android:paddingVertical="3dp"
-                        android:layout_marginVertical="@dimen/spacing_small"
-                        android:layout_marginHorizontal="@dimen/spacing_large"
-                        android:background="@drawable/bg_fill_grey" />
+                        android:paddingVertical="3dp" />
 
                     <Button
                         android:id="@+id/btn_kategori_search"
                         android:layout_width="wrap_content"
                         android:layout_height="27dp"
                         android:layout_gravity="left"
+                        android:layout_marginVertical="@dimen/spacing_small"
+                        android:layout_marginLeft="@dimen/spacing_large"
+                        android:background="@drawable/bg_fill_category"
+                        android:padding="2dp"
                         android:text="Cari"
                         android:textAllCaps="false"
-                        android:padding="2dp"
-                        android:background="@drawable/bg_fill_category"
-                        android:layout_marginLeft="@dimen/spacing_large"
-                        android:layout_marginVertical="@dimen/spacing_small"
                         android:textColor="@color/white"
                         android:textSize="12sp" />
 
@@ -110,15 +112,15 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="10dp"/>
+                android:layout_height="10dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
+                android:text="Kategori"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                android:text="Kategori"/>
+                android:textStyle="bold" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -128,20 +130,20 @@
                     android:id="@+id/spin_kategori"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
                     android:background="@color/grey_100"
-                    tools:listitem="@layout/support_simple_spinner_dropdown_item"
                     android:paddingStart="10dp"
-                    tools:ignore="RtlSymmetry" />
+                    android:paddingLeft="10dp"
+                    tools:ignore="RtlSymmetry"
+                    tools:listitem="@layout/support_simple_spinner_dropdown_item" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_arrow_down"
-                    android:padding="10dp"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerInParent="true"
-                    android:layout_alignParentEnd="true" />
+                    android:padding="10dp"
+                    android:src="@drawable/ic_arrow_down" />
 
             </RelativeLayout>
 
@@ -159,20 +161,22 @@
                         android:id="@+id/rv_kategori"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        tools:listitem="@layout/kategory_layout"/>
+                        tools:listitem="@layout/kategory_layout" />
+
                     <ImageView
                         android:id="@+id/imgv_empty_kategori"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:src="@drawable/ic_empty"
-                        android:layout_centerInParent="true"/>
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_empty" />
+
                     <ProgressBar
                         android:id="@+id/progress_kategori"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:visibility="gone"
-                        tools:visibility="visible"/>
+                        tools:visibility="visible" />
 
                 </RelativeLayout>
 

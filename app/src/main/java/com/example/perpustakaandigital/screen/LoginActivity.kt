@@ -9,15 +9,19 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.example.perpustakaandigital.MainActivity
 import com.example.perpustakaandigital.R
+import com.example.perpustakaandigital.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_login.*
-
 
 class LoginActivity : AppCompatActivity() {
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
+    private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
+    private var dbRef: DatabaseReference = database.reference
 
     private lateinit var imgv_visibility : ImageView
     private lateinit var username : EditText
@@ -93,8 +97,7 @@ class LoginActivity : AppCompatActivity() {
     // FUngsi navigasi jika login berhasil, mengarah ke halaman home
     private fun updateUI(currentUser : FirebaseUser?){
         if (currentUser != null){
-            startActivity(Intent(baseContext, MainActivity::class.java))
-            finish()
+            loadData(auth.uid.toString())
         }
         else{
             Toast.makeText(baseContext, "Login failed.", Toast.LENGTH_SHORT).show()
@@ -110,6 +113,31 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(baseContext, "Silahkan Isi Password", Toast.LENGTH_LONG).show()
             false
         }else true
+    }
+
+    // Fungsi get data user dari database untuk mengambil foto, nama, no hp
+    private fun loadData(userId: String){
+        val dataListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if(dataSnapshot.exists()){
+                    val user: User = dataSnapshot.getValue(User::class.java)!!
+                    if(user.status == "unverified"){
+                        Toast.makeText(this@LoginActivity, "Akun anda belum diverifikasi oleh admin", Toast.LENGTH_LONG).show()
+                        auth.signOut()
+                    }else {
+                        startActivity(Intent(baseContext, MainActivity::class.java))
+                        finish()
+                    }
+                }
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+                //
+            }
+        }
+        // Path database untuk data user
+        dbRef.child("user").child(userId).addListenerForSingleValueEvent(dataListener)
+
     }
 
 }

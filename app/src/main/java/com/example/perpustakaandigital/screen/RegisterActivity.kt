@@ -34,7 +34,7 @@ class RegisterActivity : AppCompatActivity(){
     lateinit var tempatLahir : EditText
     lateinit var tanggalLahir : EditText
     lateinit var spinAgama : Spinner
-    lateinit var spinHobi : Spinner
+    lateinit var hobi : EditText
     lateinit var negara : EditText
     lateinit var provinsi : EditText
     lateinit var kota : EditText
@@ -64,7 +64,7 @@ class RegisterActivity : AppCompatActivity(){
         imgvDatePicker = findViewById(R.id.imgv_date_picker)
         tanggalLahir = findViewById(R.id.edt_tanggal_lahir)
         spinAgama = findViewById(R.id.spin_agama)
-        spinHobi = findViewById(R.id.spin_hobi)
+        hobi = findViewById(R.id.edt_hobi)
         negara = findViewById(R.id.edt_negara)
         provinsi = findViewById(R.id.edt_provinsi)
         kota = findViewById(R.id.edt_kota)
@@ -94,7 +94,7 @@ class RegisterActivity : AppCompatActivity(){
             val hari = now.get(Calendar.DAY_OF_MONTH)
             val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, day ->
                 // Display Selected date in textbox
-                tanggalLahir.setText("" + day + "/" + month + "/" + year)
+                tanggalLahir.setText("" + year + "-" + month + "-" + day)
 
             }, tahun, bulan, hari).show()
         }
@@ -108,17 +108,6 @@ class RegisterActivity : AppCompatActivity(){
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             // Apply the adapter to the spinner
             spinAgama.adapter = adapter
-        }
-
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.hobi_array,
-            android.R.layout.simple_spinner_dropdown_item
-        ).also { adapter ->
-            // Specify the layout to use when the list of choices appears
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner
-            spinHobi.adapter = adapter
         }
 
         imgVisibilityPass.setOnClickListener {
@@ -192,16 +181,12 @@ class RegisterActivity : AppCompatActivity(){
     private fun createUser() {
         signup_progress.visibility = View.VISIBLE
         var jenisKelamin = ""
-        var hobi = ""
         var agama = ""
         if (spinJenisKelamin.selectedItemPosition != 0){
-            jenisKelamin = spinJenisKelamin.getSelectedItem().toString()
+            jenisKelamin = spinJenisKelamin.getSelectedItem().toString().toLowerCase()
         }
         if (spinAgama.selectedItemPosition != 0){
-            agama = spinAgama.getSelectedItem().toString()
-        }
-        if (spinHobi.selectedItemPosition != 0){
-            hobi = spinHobi.getSelectedItem().toString()
+            agama = spinAgama.getSelectedItem().toString().toLowerCase()
         }
         auth.createUserWithEmailAndPassword(email.text.toString(), password.text.toString()).
         addOnCompleteListener { task: Task<AuthResult> ->
@@ -210,11 +195,13 @@ class RegisterActivity : AppCompatActivity(){
                 val registerRef = dbRef.child("user").child(userId!!)
                 val user = User(userId, namaDepan.text.toString(), namaBelakang.text.toString(), username.text.toString(), "",
                 jenisKelamin,tempatLahir.text.toString(),tanggalLahir.text.toString(),
-                    agama, hobi, negara.text.toString(), provinsi.text.toString(),
-                    kota.text.toString(), alamat.text.toString(), email.text.toString(), password.text.toString(), 0)
+                    agama, hobi.text.toString(), negara.text.toString(), provinsi.text.toString(),
+                    kota.text.toString(), alamat.text.toString(), email.text.toString(), password.text.toString(), "unverified")
                 registerRef.setValue(user).addOnSuccessListener {
                     signup_progress.visibility = View.GONE
-                    val intent = Intent(this, MainActivity::class.java)
+                    auth.signOut()
+                    Toast.makeText(this@RegisterActivity, "Anda sudah terdaftar, silahkan tunggu verifikasi admin", Toast.LENGTH_LONG).show()
+                    val intent = Intent(this, LoginActivity::class.java)
                     startActivity(intent)
                     finish()
                 }
