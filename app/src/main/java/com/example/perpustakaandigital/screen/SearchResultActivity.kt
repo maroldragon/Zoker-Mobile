@@ -57,14 +57,16 @@ class SearchResultActivity : AppCompatActivity() {
 
         searching = intent.getStringExtra("searching")
         searchTitle = intent.getStringExtra("searchTitle")
+        searchAuthor = intent.getStringExtra("searchAuthor")
+        searchIsbn = intent.getStringExtra("searchIsbn")
+        searchPenerbit = intent.getStringExtra("searchPenerbit")
         if(searching == "on") {
-            searchAuthor = intent.getStringExtra("searchAuthor")
-            searchIsbn = intent.getStringExtra("searchIsbn")
-            searchPenerbit = intent.getStringExtra("searchPenerbit")
-            addDataKompleks(searchTitle.toString(), searchAuthor.toString(), searchIsbn.toString(), searchPenerbit.toString())
+            etSearch.setText(searchTitle)
+            etAuthorSearch.setText(searchAuthor)
+            etIsbnSearch.setText(searchIsbn)
+            etPenerbitSearch.setText(searchPenerbit)
         }else {
             etSearch.setText(searchTitle)
-            //addData()
         }
 
         imgv_filter.setOnClickListener {
@@ -114,20 +116,29 @@ class SearchResultActivity : AppCompatActivity() {
         if(bookListFilter.size == 0) {
             imvEmpty.visibility = View.VISIBLE
         }else {
+            imvEmpty.visibility = View.GONE
             //Toast.makeText(this@SearchResultActivity, bookList.toString(), Toast.LENGTH_LONG).show()
             showRecyclerResultSearch(bookListFilter)
         }
     }
 
     private fun addDataKompleks(title : String, author : String, isbn : String, penerbit: String) {
-        bookList.clear()
-        progressSearch.visibility = View.VISIBLE
-        imvEmpty.visibility = View.GONE
-        val book = Book("123", "Milk And Honey","132423423423", "1923", "Erlangga","4.5",
-                "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1534&q=80", "Love", "Evan Owen", "This talk about love and live")
-        bookList.add(book)
-        bookList.add(book)
-        showRecyclerResultSearch(bookList)
+        bookListFilter.clear()
+        for(i in 0..bookList.size-1){
+            if((bookList[i].judul!!.toLowerCase())!!.contains(title.toLowerCase()) &&
+                (bookList[i].penulis!!.toLowerCase())!!.contains(author.toLowerCase()) &&
+                (bookList[i].isbn!!.toLowerCase())!!.contains(isbn.toLowerCase()) &&
+                (bookList[i].penerbit!!.toLowerCase())!!.contains(penerbit.toLowerCase())){
+                bookListFilter.add(bookList[i])
+            }
+        }
+        if(bookListFilter.size == 0) {
+            imvEmpty.visibility = View.VISIBLE
+        }else {
+            imvEmpty.visibility = View.GONE
+            //Toast.makeText(this@SearchResultActivity, bookList.toString(), Toast.LENGTH_LONG).show()
+            showRecyclerResultSearch(bookListFilter)
+        }
     }
 
     private fun showRecyclerResultSearch(bookListParams: ArrayList<Book>) {
@@ -158,7 +169,11 @@ class SearchResultActivity : AppCompatActivity() {
                         val book = p.getValue(Book::class.java)
                         bookList.add(book!!)
                     }
-                    addData()
+                    if(searching == "on"){
+                        addDataKompleks(etSearch.text.toString(), etAuthorSearch.text.toString(), etIsbnSearch.text.toString(), etPenerbitSearch.text.toString())
+                    }else {
+                        addData()
+                    }
                     progressSearch.visibility = View.GONE
                 }
                 else{

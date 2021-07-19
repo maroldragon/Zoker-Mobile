@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -73,8 +74,34 @@ class ProfilFragment : Fragment() {
         }
 
         btnSearch.setOnClickListener {
-            startActivity(Intent(context, SearchResultActivity::class.java))
+            if(etSearch.text.toString() != "" || etAuthorSearch.text.toString() != "" || etIsbnSearch.text.toString() != ""
+                || etPenerbitSearch.text.toString() != ""){
+
+                val intent = Intent(context, SearchResultActivity::class.java)
+                intent.putExtra("searching", "on")
+                intent.putExtra("searchTitle", etSearch.text.toString())
+                intent.putExtra("searchAuthor", etAuthorSearch.text.toString())
+                intent.putExtra("searchIsbn", etIsbnSearch.text.toString())
+                intent.putExtra("searchPenerbit", etPenerbitSearch.text.toString())
+                startActivity(intent)
+            }else {
+                Toast.makeText(context, "Tuliskan Keyword Pencarian", Toast.LENGTH_LONG).show()
+            }
         }
+
+        etSearch.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                if (etSearch.text.toString() != "") {
+                    val intent = Intent(context, SearchResultActivity::class.java)
+                    intent.putExtra("searchTitle", etSearch.text.toString())
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(context, "Tuliskan Keyword Pencarian", Toast.LENGTH_LONG).show()
+                }
+                true
+            } else false
+        })
+
         btn_lihat_profile.setOnClickListener {
             startActivity(Intent(context, ProfileMemberActivity::class.java))
         }
@@ -82,7 +109,7 @@ class ProfilFragment : Fragment() {
             startActivity(Intent(context, RiwayatActivity::class.java))
         }
         btn_kontak.setOnClickListener {
-            startActivity(Intent(context, RiwayatActivity::class.java))
+            startActivity(Intent(context, KontakActivity::class.java))
         }
         btn_tentang.setOnClickListener {
             startActivity(Intent(context, AboutActivity::class.java))

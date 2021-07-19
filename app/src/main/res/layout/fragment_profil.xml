@@ -233,7 +233,6 @@
                     android:textSize="20sp"
                     android:textAllCaps="false"
                     android:text="Kontak"
-                    android:visibility="gone"
                     android:background="@color/grey_300"
                     android:layout_marginTop="@dimen/spacing_large"
                     android:paddingStart="@dimen/spacing_large"

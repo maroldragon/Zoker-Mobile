@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -62,8 +63,33 @@ class MyItemFragment : Fragment() {
         }
 
         btnSearch.setOnClickListener {
-            startActivity(Intent(context, SearchResultActivity::class.java))
+            if(etSearch.text.toString() != "" || etAuthorSearch.text.toString() != "" || etIsbnSearch.text.toString() != ""
+                || etPenerbitSearch.text.toString() != ""){
+
+                val intent = Intent(context, SearchResultActivity::class.java)
+                intent.putExtra("searching", "on")
+                intent.putExtra("searchTitle", etSearch.text.toString())
+                intent.putExtra("searchAuthor", etAuthorSearch.text.toString())
+                intent.putExtra("searchIsbn", etIsbnSearch.text.toString())
+                intent.putExtra("searchPenerbit", etPenerbitSearch.text.toString())
+                startActivity(intent)
+            }else {
+                Toast.makeText(context, "Tuliskan Keyword Pencarian", Toast.LENGTH_LONG).show()
+            }
         }
+
+        etSearch.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                if (etSearch.text.toString() != "") {
+                    val intent = Intent(context, SearchResultActivity::class.java)
+                    intent.putExtra("searchTitle", etSearch.text.toString())
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(context, "Tuliskan Keyword Pencarian", Toast.LENGTH_LONG).show()
+                }
+                true
+            } else false
+        })
 
         progressMyItem.visibility = View.VISIBLE
         imvEmpty.visibility = View.GONE

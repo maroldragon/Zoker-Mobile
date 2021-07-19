@@ -13,9 +13,9 @@ import com.example.perpustakaandigital.MainActivity
 import com.example.perpustakaandigital.R
 import com.example.perpustakaandigital.model.Book
 import com.example.perpustakaandigital.model.Peminjaman
+import com.example.perpustakaandigital.model.User
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_detail.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -43,13 +43,14 @@ class DetailActivity : AppCompatActivity() {
         btn_pinjam_baca = findViewById(R.id.btn_detail_pinjam)
         btn_ulasan= findViewById(R.id.btn_detail_ulasan)
 
+        val book = intent.getParcelableExtra<Book>(EXTRA_BOOK) as Book
+
         if(myItem == "on") {
             btn_pinjam_baca.setText("Baca Buku")
         }else {
+            checkBuku(book)
             btn_ulasan.visibility = View.GONE
         }
-
-        val book = intent.getParcelableExtra<Book>(EXTRA_BOOK) as Book
 
         Glide.with(this)
             .load(book.cover)
@@ -74,21 +75,10 @@ class DetailActivity : AppCompatActivity() {
         btn_pinjam_baca.setOnClickListener {
             if(myItem == "on"){
                 val intent = Intent(this, ReadBookActivity::class.java)
-                intent.putExtra("FILE", book.file)
+                intent.putExtra("FILE", book.file.toString())
                 startActivity(intent)
             }else {
-                val idUser = auth.currentUser?.uid
-                val idPeminjaman = idUser + "-" + book.isbn
-                val idBuku = book.isbn
-                val dateFormat = SimpleDateFormat("dd/M/yyyy")
-                val currentDate = dateFormat.format(Date())
-                val pinjam = Peminjaman(idPeminjaman, idUser, idBuku, currentDate, "unfinished")
-                dbRef.child("peminjaman").child(idPeminjaman).setValue(pinjam).addOnSuccessListener {
-                    Toast.makeText(this, "Buku Berhasil Dipinjam", Toast.LENGTH_LONG).show()
-                    val intent = Intent(this, MainActivity::class.java)
-                    intent.putExtra("PINJAM", "buku")
-                    startActivity(intent)
-                }
+                checkPeminjaman(book)
             }
         }
 
@@ -102,4 +92,69 @@ class DetailActivity : AppCompatActivity() {
             finish()
         }
     }
+
+    fun checkPeminjaman(book:Book) {
+        var totalPinjaman = 0
+        val idUser = auth.currentUser?.uid
+        val idPeminjaman = idUser + "-" + book.isbn
+        val idBuku = book.isbn
+        val dateFormat = SimpleDateFormat("dd/M/yyyy")
+        val currentDate = dateFormat.format(Date())
+        val pinjam = Peminjaman(idPeminjaman, idUser, idBuku, currentDate, "unfinished")
+        val dataListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if(dataSnapshot.exists()){
+                    for (p in dataSnapshot.children) {
+                        totalPinjaman += 1
+                    }
+                    if(totalPinjaman >= 5){
+                        Toast.makeText(this@DetailActivity, "Anda sudah meminjam " + totalPinjaman.toString() + " Buku", Toast.LENGTH_LONG).show()
+                    }else {
+                        dbRef.child("peminjaman").child(idPeminjaman).setValue(pinjam).addOnSuccessListener {
+                            Toast.makeText(this@DetailActivity, "Buku Berhasil Dipinjam", Toast.LENGTH_LONG)
+                                .show()
+                            val intent = Intent(this@DetailActivity, MainActivity::class.java)
+                            intent.putExtra("PINJAM", "buku")
+                            startActivity(intent)
+                        }
+                    }
+                }else {
+                    dbRef.child("peminjaman").child(idPeminjaman).setValue(pinjam).addOnSuccessListener {
+                        Toast.makeText(this@DetailActivity, "Buku Berhasil Dipinjam", Toast.LENGTH_LONG)
+                            .show()
+                        val intent = Intent(this@DetailActivity, MainActivity::class.java)
+                        intent.putExtra("PINJAM", "buku")
+                        startActivity(intent)
+                    }
+                }
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+                //
+            }
+        }
+        // Path database untuk data user
+        dbRef.child("peminjaman").orderByChild("idUser").equalTo(idUser).addListenerForSingleValueEvent(dataListener)
+    }
+
+
+    fun checkBuku(book : Book){
+        val idUser = auth.currentUser?.uid
+        val idPeminjaman = idUser + "-" + book.isbn
+        val dataListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if(dataSnapshot.exists()){
+                    btn_pinjam_baca.isEnabled = false
+                    btn_pinjam_baca.setText("Buku Sudah Dipinjam")
+                }
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+                //
+            }
+        }
+        // Path database untuk data user
+        dbRef.child("peminjaman").child(idPeminjaman).addListenerForSingleValueEvent(dataListener)
+    }
+
 }

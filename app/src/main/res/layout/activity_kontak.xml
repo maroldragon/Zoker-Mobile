@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".screen.KontakActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/overlay_dark_5">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_medium"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:id="@+id/btn_kontak_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_keyboard_arrow_left"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Kontak"
+                        android:layout_gravity="center"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black_promo" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/spacing_large"
+                    android:paddingVertical="@dimen/spacing_medium"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_kontak_nama"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="@dimen/spacing_medium"
+                        android:text="Nama Anda"/>
+
+                    <EditText
+                        android:id="@+id/edt_kontak_nama"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:backgroundTint="@color/white"
+                        android:background="@drawable/bg_fill_empty" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/spacing_large"
+                    android:paddingVertical="@dimen/spacing_medium"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="@dimen/spacing_medium"
+                        android:text="Email Anda"/>
+
+                    <EditText
+                        android:id="@+id/edt_kontak_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:backgroundTint="@color/white"
+                        android:background="@drawable/bg_fill_empty" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/spacing_large"
+                    android:paddingVertical="@dimen/spacing_medium"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="@dimen/spacing_medium"
+                        android:text="Pesan Anda"/>
+
+                    <EditText
+                        android:id="@+id/edt_kontak_pesan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:lines="8"
+                        android:gravity="top|left"
+                        android:backgroundTint="@color/white"
+                        android:layout_marginBottom="@dimen/spacing_small"
+                        android:background="@drawable/bg_fill_empty" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_kontak_kirim"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_large"
+                    android:text="Kirim"
+                    android:background="@drawable/bg_fill_dark"
+                    android:padding="16dp"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="@dimen/spacing_large"
+                    android:layout_gravity="center" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

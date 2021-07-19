@@ -89,10 +89,10 @@ class HomeFragment : Fragment() {
 
                 val intent = Intent(context, SearchResultActivity::class.java)
                 intent.putExtra("searching", "on")
-                intent.putExtra("searchTitle", etSearch.text)
-                intent.putExtra("searchAuthor", etAuthorSearch.text)
-                intent.putExtra("searchIsbn", etIsbnSearch.text)
-                intent.putExtra("searchPenerbit", etPenerbitSearch.text)
+                intent.putExtra("searchTitle", etSearch.text.toString())
+                intent.putExtra("searchAuthor", etAuthorSearch.text.toString())
+                intent.putExtra("searchIsbn", etIsbnSearch.text.toString())
+                intent.putExtra("searchPenerbit", etPenerbitSearch.text.toString())
                 startActivity(intent)
             }else {
                 Toast.makeText(context, "Tuliskan Keyword Pencarian", Toast.LENGTH_LONG).show()
