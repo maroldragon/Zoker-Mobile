@@ -32,35 +32,13 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <EditText
+                    android:id="@+id/edt_nama_lengkap"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <EditText
-                        android:id="@+id/edt_nama_depan"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:hint="Nama Depan"
-                        android:layout_marginRight="5dp"
-                        android:padding="10dp"
-                        android:background="@color/grey_100"
-                        android:layout_marginEnd="5dp" />
-
-                    <EditText
-                        android:id="@+id/edt_nama_belakang"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_weight="1"
-                        android:hint="Nama Belakang"
-                        android:padding="10dp"
-                        android:background="@color/grey_100"
-                        android:layout_marginStart="5dp" />
-
-                </LinearLayout>
+                    android:hint="Nama Lengkap"
+                    android:padding="10dp"
+                    android:background="@color/grey_100" />
 
                 <View
                     android:layout_width="0dp"
@@ -160,46 +138,6 @@
                     </RelativeLayout>
 
                 </LinearLayout>
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="20dp"/>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <Spinner
-                        android:id="@+id/spin_agama"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="10dp"
-                        android:background="@color/grey_100"
-                        tools:listitem="@layout/support_simple_spinner_dropdown_item"
-                        android:paddingStart="10dp" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_arrow_down"
-                        android:padding="10dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerInParent="true"
-                        android:layout_alignParentEnd="true" />
-
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="20dp"/>
-
-                <EditText
-                    android:id="@+id/edt_hobi"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Hobi"
-                    android:padding="10dp"
-                    android:background="@color/grey_100"/>
 
                 <View
                     android:layout_width="0dp"

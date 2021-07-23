@@ -100,7 +100,7 @@ class LoginActivity : AppCompatActivity() {
             loadData(auth.uid.toString())
         }
         else{
-            Toast.makeText(baseContext, "Login failed.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(baseContext, "Email atau Password Salah", Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -13,7 +13,6 @@ import com.example.perpustakaandigital.MainActivity
 import com.example.perpustakaandigital.fragment.HomeFragment
 import com.example.perpustakaandigital.R
 import com.example.perpustakaandigital.model.Book
-import com.example.perpustakaandigital.model.Notif
 
 class SliderAdapter(val context: Context?, val bookList: ArrayList<Book>) : SliderViewAdapter<SliderAdapter.SliderAdapterVH>() {
     private var mCount: Int = 0

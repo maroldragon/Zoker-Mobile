@@ -130,7 +130,7 @@ class ProfilFragment : Fragment() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if(dataSnapshot.exists()){
                     val user: User = dataSnapshot.getValue(User::class.java)!!
-                    username.text = user.namaDepan + " " + user.namaBelakang
+                    username.text = user.namaLengkap
                     email.text = user.userName
                     country.text = user.negara
                     if(user.photo != ""){

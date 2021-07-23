@@ -127,7 +127,6 @@ class ProfileMemberActivity : AppCompatActivity() {
                     tv_profile_member_negara.text = user.negara
                     tv_profile_member_email.text = user.email
 
-                    Toast.makeText(this@ProfileMemberActivity, user.photo + "Ya", Toast.LENGTH_LONG).show()
                     if(user.photo != ""){
                         Glide.with(this@ProfileMemberActivity).load(user.photo).into(imgv_profil_member)
                     }

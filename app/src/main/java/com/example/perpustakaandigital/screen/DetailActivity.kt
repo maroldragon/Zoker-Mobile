@@ -2,12 +2,14 @@ package com.example.perpustakaandigital.screen
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.bumptech.glide.Glide
 import com.example.perpustakaandigital.MainActivity
 import com.example.perpustakaandigital.R
@@ -19,6 +21,8 @@ import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_detail.*
 import java.text.SimpleDateFormat
 import java.util.*
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class DetailActivity : AppCompatActivity() {
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -93,13 +97,18 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun checkPeminjaman(book:Book) {
         var totalPinjaman = 0
         val idUser = auth.currentUser?.uid
         val idPeminjaman = idUser + "-" + book.isbn
         val idBuku = book.isbn
-        val dateFormat = SimpleDateFormat("dd/M/yyyy")
-        val currentDate = dateFormat.format(Date())
+
+        val currentDateTime = LocalDateTime.now()
+        val currentDate = currentDateTime.format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss"))
+
+//        val dateFormat = SimpleDateFormat("dd/M/yyyy ")
+//        val currentDate = dateFormat.format(Date())
         val pinjam = Peminjaman(idPeminjaman, idUser, idBuku, currentDate, "unfinished")
         val dataListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -145,6 +154,7 @@ class DetailActivity : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if(dataSnapshot.exists()){
                     btn_pinjam_baca.isEnabled = false
+
                     btn_pinjam_baca.setText("Buku Sudah Dipinjam")
                 }
             }

@@ -11,21 +11,14 @@ import com.example.perpustakaandigital.R
 class AboutActivity : AppCompatActivity() {
 
     lateinit var btnBack : ImageView
-    lateinit var btn_read : Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_about)
 
         btnBack = findViewById(R.id.btn_tentang_back)
-        btn_read = findViewById(R.id.btn_tentang_read)
 
         btnBack.setOnClickListener {
             finish()
         }
-
-        btn_read.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
-        }
-
     }
 }

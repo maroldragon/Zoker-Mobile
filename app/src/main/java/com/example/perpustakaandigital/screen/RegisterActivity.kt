@@ -20,6 +20,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_register.*
+import java.math.BigInteger
+import java.security.MessageDigest
 import java.util.*
 
 class RegisterActivity : AppCompatActivity(){
@@ -27,14 +29,11 @@ class RegisterActivity : AppCompatActivity(){
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var dbRef: DatabaseReference = database.reference
 
-    lateinit var namaDepan : EditText
-    lateinit var namaBelakang : EditText
+    lateinit var namaLengkap : EditText
     lateinit var username : EditText
     lateinit var spinJenisKelamin : Spinner
     lateinit var tempatLahir : EditText
     lateinit var tanggalLahir : EditText
-    lateinit var spinAgama : Spinner
-    lateinit var hobi : EditText
     lateinit var negara : EditText
     lateinit var provinsi : EditText
     lateinit var kota : EditText
@@ -56,15 +55,12 @@ class RegisterActivity : AppCompatActivity(){
 
         signup_progress.visibility = View.GONE
 
-        namaDepan = findViewById(R.id.edt_nama_depan)
-        namaBelakang = findViewById(R.id.edt_nama_belakang)
+        namaLengkap = findViewById(R.id.edt_nama_lengkap)
         username = findViewById(R.id.edt_username)
         spinJenisKelamin = findViewById(R.id.spin_jenis_kelamin)
         tempatLahir = findViewById(R.id.edt_tempat_lahir)
         imgvDatePicker = findViewById(R.id.imgv_date_picker)
         tanggalLahir = findViewById(R.id.edt_tanggal_lahir)
-        spinAgama = findViewById(R.id.spin_agama)
-        hobi = findViewById(R.id.edt_hobi)
         negara = findViewById(R.id.edt_negara)
         provinsi = findViewById(R.id.edt_provinsi)
         kota = findViewById(R.id.edt_kota)
@@ -97,17 +93,6 @@ class RegisterActivity : AppCompatActivity(){
                 tanggalLahir.setText("" + year + "-" + month + "-" + day)
 
             }, tahun, bulan, hari).show()
-        }
-
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.agama_array,
-            android.R.layout.simple_spinner_dropdown_item
-        ).also { adapter ->
-            // Specify the layout to use when the list of choices appears
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner
-            spinAgama.adapter = adapter
         }
 
         imgVisibilityPass.setOnClickListener {
@@ -179,28 +164,24 @@ class RegisterActivity : AppCompatActivity(){
 
     // Fungsi untuk register user, dan dan menambahkan data user kedalam bucket/tabel user
     private fun createUser() {
+        val pass = md5(password.text.toString())
         signup_progress.visibility = View.VISIBLE
         var jenisKelamin = ""
-        var agama = ""
         if (spinJenisKelamin.selectedItemPosition != 0){
             jenisKelamin = spinJenisKelamin.getSelectedItem().toString().toLowerCase()
-        }
-        if (spinAgama.selectedItemPosition != 0){
-            agama = spinAgama.getSelectedItem().toString().toLowerCase()
         }
         auth.createUserWithEmailAndPassword(email.text.toString(), password.text.toString()).
         addOnCompleteListener { task: Task<AuthResult> ->
             if (task.isSuccessful){
                 val userId = auth.currentUser?.uid
                 val registerRef = dbRef.child("user").child(userId!!)
-                val user = User(userId, namaDepan.text.toString(), namaBelakang.text.toString(), username.text.toString(), "",
-                jenisKelamin,tempatLahir.text.toString(),tanggalLahir.text.toString(),
-                    agama, hobi.text.toString(), negara.text.toString(), provinsi.text.toString(),
-                    kota.text.toString(), alamat.text.toString(), email.text.toString(), password.text.toString(), "unverified")
+                val user = User(userId, namaLengkap.text.toString(), username.text.toString(), "",
+                jenisKelamin,tempatLahir.text.toString(),tanggalLahir.text.toString(), negara.text.toString(), provinsi.text.toString(),
+                    kota.text.toString(), alamat.text.toString(), email.text.toString(), pass , "unverified")
                 registerRef.setValue(user).addOnSuccessListener {
                     signup_progress.visibility = View.GONE
                     auth.signOut()
-                    Toast.makeText(this@RegisterActivity, "Anda sudah terdaftar, silahkan tunggu verifikasi admin", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@RegisterActivity, "Anda Sudah Terdaftar, Ailahkan Tunggu Verifikasi Admin", Toast.LENGTH_LONG).show()
                     val intent = Intent(this, LoginActivity::class.java)
                     startActivity(intent)
                     finish()
@@ -210,7 +191,7 @@ class RegisterActivity : AppCompatActivity(){
                 signup_progress.visibility = View.GONE
                 Toast.makeText(
                     baseContext,
-                    "Please check your number Email",
+                    "Silahkan Check Kembali Email yang Didaftarkan",
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -229,8 +210,13 @@ class RegisterActivity : AppCompatActivity(){
         return password.length >= 8
     }
 
+    fun md5(input:String): String {
+        val md = MessageDigest.getInstance("MD5")
+        return BigInteger(1, md.digest(input.toByteArray())).toString(16).padStart(32, '0')
+    }
+
       private fun checkingInput(): String {
-        if(namaDepan.text.toString().trim() == "") return "Nama Depat"
+        if(namaLengkap.text.toString().trim() == "") return "Nama"
         else if (email.text.toString().trim() == "") return "Email"
         else if (alamat.text.toString().trim() == "") return "Alamat"
         else if (password.text.toString() == "") return "Password"

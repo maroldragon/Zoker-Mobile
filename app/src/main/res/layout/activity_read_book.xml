@@ -1,61 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:id="@+id/remote_pdf_root"
     android:orientation="vertical"
-    tools:context=".screen.ReadBookActivity">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <EditText
+        android:id="@+id/et_pdfUrl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="pdf"
+        android:visibility="gone"
+        android:text="https://firebasestorage.googleapis.com/v0/b/perpustakaan-zoker.appspot.com/o/file.pdf?alt=media&amp;token=91aa9adc-cdc1-4452-93bf-c46d33dc923f"
+        />
+
+    <Button
+        android:id="@+id/btn_download"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="Download"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/overlay_dark_5">
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        android:padding="@dimen/spacing_medium"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/btn_read_back"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/spacing_medium"
-            android:orientation="horizontal">
-            <ImageView
-                android:id="@+id/btn_read_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_keyboard_arrow_left"/>
-            <TextView
-                android:id="@+id/tv_read_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Baca Buku"
-                android:layout_gravity="center"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/black_promo" />
-        </LinearLayout>
+            android:src="@drawable/ic_keyboard_arrow_left"/>
+        <TextView
+            android:id="@+id/tv_read_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Baca Buku"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black_promo" />
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.github.barteksc.pdfviewer.PDFView
-            android:id="@+id/pdfView"
+    <es.voghdev.pdfviewpager.library.PDFViewPager
+            android:id="@+id/pdfViewPager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </RelativeLayout>
+            android:layout_height="match_parent"/>
 
 </LinearLayout>
 
-<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:tools="http://schemas.android.com/tools"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent">-->
 
-<!--    <com.github.barteksc.pdfviewer.PDFView-->
-<!--        android:id="@+id/pdfView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent" />-->
-
-<!--</RelativeLayout>-->

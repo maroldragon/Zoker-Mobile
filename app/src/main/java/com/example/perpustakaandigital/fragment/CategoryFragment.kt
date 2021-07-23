@@ -25,6 +25,8 @@ class CategoryFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var dbRef: DatabaseReference = database.reference
     private var bookList: ArrayList<Book> = arrayListOf()
+    private var kategoriMap: MutableMap<String, Int> = mutableMapOf()
+    private var dataList: ArrayList<String> = arrayListOf()
     lateinit var etSearch : EditText
     lateinit var imgv_filter : ImageView
     lateinit var llFilter : LinearLayout
@@ -64,6 +66,9 @@ class CategoryFragment : Fragment(), AdapterView.OnItemSelectedListener {
             }
         }
 
+//        dataList.add("Cinta");
+//        dataList.add("rahasia")
+
         btnSearch.setOnClickListener {
             if(etSearch.text.toString() != "" || etAuthorSearch.text.toString() != "" || etIsbnSearch.text.toString() != ""
                 || etPenerbitSearch.text.toString() != ""){
@@ -93,16 +98,20 @@ class CategoryFragment : Fragment(), AdapterView.OnItemSelectedListener {
             } else false
         })
 
-        ArrayAdapter.createFromResource(
-                context!!,
-                R.array.kategori_array,
-                android.R.layout.simple_spinner_dropdown_item
-        ).also { adapter ->
-            // Specify the layout to use when the list of choices appears
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner
-            spinKategori.adapter = adapter
-        }
+//        var arraySpin : ArrayList<String> = arrayListOf()
+//        arraySpin.add("Sa")
+//        arraySpin.add("yo")
+
+//        ArrayAdapter.createFromResource(
+//                context!!,
+//                R.array.kategori_array,
+//                android.R.layout.simple_spinner_dropdown_item
+//        ).also { adapter ->
+//            // Specify the layout to use when the list of choices appears
+//            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//            // Apply the adapter to the spinner
+//            spinKategori.adapter = adapter
+//        }
 
         progressKategori.visibility = View.VISIBLE
         imvEmpty.visibility = View.GONE
@@ -110,8 +119,7 @@ class CategoryFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
         spinKategori.onItemSelectedListener = this
 
-        loadDataBukuKategori("")
-
+        loadDataBukuKategori()
         return view
     }
 
@@ -134,9 +142,15 @@ class CategoryFragment : Fragment(), AdapterView.OnItemSelectedListener {
         val bookListFilter: ArrayList<Book> = arrayListOf()
         val kategori = spinKategori.getSelectedItem().toString()
         if(position != 0) {
-            loadDataBukuKategori(kategori)
+            for(i in 0..bookList.size-1){
+                if(bookList[i].kategori == kategori){
+                    bookListFilter.add(bookList[i])
+                }
+            }
+            showRecyclerKategori(bookListFilter)
         }else {
-            loadDataBukuKategori("")
+            showRecyclerKategori(bookList);
+            //loadDataBukuKategori("")
         }
     }
 
@@ -161,15 +175,11 @@ class CategoryFragment : Fragment(), AdapterView.OnItemSelectedListener {
         })
     }
 
-    private fun loadDataBukuKategori(kategori: String){
+    private fun loadDataBukuKategori(){
         // Get data from firebase
         bookList.clear()
-        val query: Query
-        if(kategori != ""){
-            query = dbRef.child("books").orderByChild("kategori").equalTo(kategori)
-        }else {
-            query = dbRef.child("books").orderByChild("kategori")
-        }
+
+        val query: Query = dbRef.child("books")
 
         query.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
@@ -182,6 +192,7 @@ class CategoryFragment : Fragment(), AdapterView.OnItemSelectedListener {
                         bookList.add(book!!)
                     }
                     showRecyclerKategori(bookList)
+                    generateKategori()
                     progressKategori.visibility = View.GONE
                 }
                 else{
@@ -191,6 +202,19 @@ class CategoryFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 }
             }
         })
+    }
+
+    private fun generateKategori(){
+        dataList.add("Semua Kategori")
+        for(i in 0..bookList.size-1){
+            if(kategoriMap[bookList[i].kategori.toString()] == null) {
+                dataList.add(bookList[i].kategori.toString())
+                kategoriMap.put(bookList[i]?.kategori.toString(), 1)
+            }
+        }
+        var arrayAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_dropdown_item, dataList)
+        spinKategori.adapter = arrayAdapter
+        //Toast.makeText(context, kategoriMap.keys.toString(), Toast.LENGTH_LONG).show()
     }
 
 }
