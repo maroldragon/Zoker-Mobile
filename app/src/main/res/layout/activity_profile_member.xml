@@ -314,6 +314,18 @@
                         android:text="Fajar@gmail.com"/>
                 </LinearLayout>
 
+                <Button
+                    android:id="@+id/btn_edit_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/spacing_large"
+                    android:background="@drawable/bg_fill_dark"
+                    android:padding="5dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:textAllCaps="false"
+                    android:text="Edit Profil"/>
+
             </LinearLayout>
 
         </LinearLayout>

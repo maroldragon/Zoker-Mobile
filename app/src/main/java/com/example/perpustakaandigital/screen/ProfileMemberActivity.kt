@@ -47,6 +47,10 @@ class ProfileMemberActivity : AppCompatActivity() {
             finish()
         }
 
+        btn_edit_profile.setOnClickListener {
+            startActivity(Intent(this,  EditProfileActivity::class.java))
+        }
+
         loadData(auth.uid.toString())
 
     }

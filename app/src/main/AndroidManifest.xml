@@ -25,7 +25,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PerpustakaanDigital"
         tools:targetApi="m">
-        <activity android:name=".screen.KontakActivity"></activity>
+        <activity android:name=".screen.EditProfileActivity"></activity>
+        <activity android:name=".screen.KontakActivity" />
         <activity android:name=".screen.ReadBookActivity" />
         <activity android:name=".screen.UlasanActivity" />
         <activity android:name=".screen.DetailNotifActivity" />
@@ -44,7 +45,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

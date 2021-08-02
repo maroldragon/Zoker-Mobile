@@ -135,7 +135,9 @@ class MyItemFragment : Fragment() {
                 if(p0.exists()){
                     for (p in p0.children){
                         val pinjam = p.getValue(Peminjaman::class.java)
-                        getBookData(pinjam?.idBuku as String)
+                        if(pinjam?.status == "unfinished"){
+                            getBookData(pinjam?.idBuku as String)
+                        }
                     }
                     progressMyItem.visibility = View.GONE
                 }

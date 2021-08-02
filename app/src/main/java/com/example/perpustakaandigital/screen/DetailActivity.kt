@@ -114,10 +114,13 @@ class DetailActivity : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if(dataSnapshot.exists()){
                     for (p in dataSnapshot.children) {
-                        totalPinjaman += 1
+                        val pinjam = p.getValue(Peminjaman::class.java)
+                        if(pinjam?.status == "unfinished"){
+                            totalPinjaman += 1
+                        }
                     }
                     if(totalPinjaman >= 5){
-                        Toast.makeText(this@DetailActivity, "Anda sudah meminjam " + totalPinjaman.toString() + " Buku", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@DetailActivity, "Anda sudah meminjam 5 Buku", Toast.LENGTH_LONG).show()
                     }else {
                         dbRef.child("peminjaman").child(idPeminjaman).setValue(pinjam).addOnSuccessListener {
                             Toast.makeText(this@DetailActivity, "Buku Berhasil Dipinjam", Toast.LENGTH_LONG)

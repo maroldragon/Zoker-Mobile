@@ -124,17 +124,6 @@ class HomeFragment : Fragment() {
         return view
     }
 
-//    private fun addData() {
-//        bookList.clear()
-//        val book = Book("123", "Milk And Honey","132423423423", "1923", "Erlangga","4.5",
-//                "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1534&q=80", "Love", "Evan Owen", "This talk about love and live")
-//        bookList.add(book)
-//        bookList.add(book)
-//        bookList.add(book)
-//        bookList.add(book)
-//        showRecyclerHomeNew()
-//    }
-
     private fun showSlider() {
         val adapterSlider = SliderAdapter(context, bookListSlider)
         adapterSlider.count = 4
@@ -244,7 +233,7 @@ class HomeFragment : Fragment() {
 
     private fun loadDataBukuNew(){
         // Get data from firebase
-        val query: Query = dbRef.child("books").limitToFirst(5)
+        val query: Query = dbRef.child("books").orderByChild("tanggal").limitToFirst(5)
         query.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

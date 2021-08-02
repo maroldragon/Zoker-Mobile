@@ -13,7 +13,8 @@ class Book(
         var cover : String? = "",
         var kategori : String? = "",
         var penulis : String? = "",
-        var deskripsi : String? = ""
+        var deskripsi : String? = "",
+        var tanggal : String = ""
 ): Parcelable {
         constructor(parcel: Parcel) : this(
         parcel.readString(),
@@ -39,6 +40,7 @@ class Book(
                 p0?.writeString(kategori)
                 p0?.writeString(penulis)
                 p0?.writeString(deskripsi)
+                p0?.writeString(tanggal)
         }
 
         override fun describeContents(): Int {
